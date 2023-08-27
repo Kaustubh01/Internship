@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Hello {{ student_name }}</h1>
+
+    <form action="{{ url_for('logout') }}" method="get">
+        <button type="submit">Logout</button>
+    </form>
+    
+    <div id="internships">
+        <h3>Your Internships</h3>
+        <form action="{{ url_for('request_internship') }}" method="get">
+            <button type="submit">Request Internship</button>
+        </form>
+        <ul>
+            {% for internship in internships %}
+                <li>{{ internship.organization }}</li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</body>
+</html>

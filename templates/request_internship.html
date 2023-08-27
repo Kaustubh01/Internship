@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Internship Request Form</title>
+</head>
+<body>
+    <form action="{{ url_for('add_new_internship') }}" method="post">
+        <label for="organization">Name of the company</label>
+        <input type="text" name="organization"><br>
+
+        <label for="employer-name">Name of the employer</label>
+        <input type="text" name="employer-name"><br>
+
+        <label for="offer-letter">Offer Letter</label>
+        <input type="file" name="offer-letter" accept=".pdf"><br>
+
+        <input type="submit" value="Submit Request">
+    </form>
+</body>
+</html>

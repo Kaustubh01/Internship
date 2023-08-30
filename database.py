@@ -12,13 +12,16 @@ class Internship(db.Model):
 
     internship_id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     prn = db.Column(db.Integer)
+    year = db.Column(db.String)
+    std_class = db.Column(db.String)
+    roll_no = db.column(db.Integer)
     organization = db.Column(db.String)
-    employer = db.Column(db.String)
-
-def add_student():
-    student = Student(prn = 2, name="Omkar")
-    db.session.add(student)
-    db.session.commit()
+    duration = db.Column(db.String)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
+    work_time =db.Column(db.String)
+    days = db.Column(db.Integer)
+    status = db.Column(db.String, default='pending')
 
 def get_student(prn):
     return Student.query.get(prn)
@@ -44,8 +47,8 @@ def check_registration(prn):
     
 
 
-def add_internship(prn, organization, employer):
-    internship = Internship(prn = prn, organization = organization, employer = employer)
+def add_internship(prn, organization, year, roll_no, duration, start_date, end_date, work_time, days, std_class):
+    internship = Internship(prn = prn, year = year , roll_no = roll_no, organization = organization, duration = duration, start_date = start_date, end_date = end_date, work_time=work_time, days = days, std_class = std_class)
     db.session.add(internship)
     db.session.commit()
 

@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, render_template, session
-from database import Student,init_app, add_student, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -38,6 +38,8 @@ def login():
     if request.method == 'POST':
         password = request.form.get('password')
         prn = request.form.get('prn')
+        session['prn'] = prn
+        session['student']= get_student(prn).name
         if authenticate_student(prn, password):
             return redirect(url_for('dashboard'))
         else:
@@ -60,17 +62,24 @@ def dashboard():
     first_name = student_name.split()[1].lower().capitalize()
     return render_template('dashboard.html', student_name = first_name,internships = internships)
 
-@app.route('/request_internship')
-def request_internship():
-    return render_template('request_internship.html')
 
-@app.route('/add_new_internship', methods=['POST'])
+@app.route('/add_new_internship', methods=['POST','GET'])
 def add_new_internship():
-    student_prn = session.get('prn')
-    new_organization = request.form.get('organization')
-    new_employer = request.form.get('employer-name')
-    add_internship(student_prn, new_organization, new_employer)
-    return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        academic_year = request.form.get('academic_year')
+        student_class = request.form.get('class')
+        roll_no = request.form.get('roll_no')
+        organization_name = request.form.get('organization_name')
+        duration = request.form.get('duration')
+        start_date = request.form.get('start_date')
+        end_date = request.form.get('end_date')
+        work_time = request.form.get('work_time')
+        days = request.form.get('days')
+
+        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, roll_no= roll_no, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days, std_class=student_class)
+        
+        return redirect(url_for('dashboard'))
+    return render_template('request_internship.html')
 
 @app.route('/logout')
 def logout():

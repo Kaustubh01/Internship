@@ -63,6 +63,13 @@ def get_student_name(prn):
     student = Student.query.get(prn)
     return student.name
 
+def set_internship_status(id, updated_status):
+    internship = Internship.query.get(id)
+    if internship:
+        internship.status = updated_status
+        db.session.commit()
+        print('internship status updated')
+
 
 def init_app(app):
     db.init_app(app)

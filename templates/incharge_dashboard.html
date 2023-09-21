@@ -16,6 +16,8 @@
 </head>
 <body>
     <h1>Incharge Dashboard</h1>
+
+    <h3>Pending Requests</h3>
     <table id="internships-table">
         <tr>
             <th>Sr. no.</th>
@@ -26,8 +28,9 @@
             <th>Start and End Dates</th>
             <th>Working Days</th>
             <th>Working Hours</th>
-            <th>Status</th>
+            <th></th>
         </tr>
+
         {% for item in data %}
         <tr>
             <td>{{ item.internship.internship_id }}</td>
@@ -38,9 +41,12 @@
             <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
-            <td><button>{{ item.internship.status }}</button></td>
+            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>
         {% endfor %}
+        <tr>
+            <td></td>
+        </tr>
     </table>
 </body>
 </html>

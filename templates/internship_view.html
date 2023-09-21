@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Internship View</h1>
+    <form method="POST" action="{{ url_for('approve') }}">
+        <input type="submit" name="action" value="Approve">
+    </form>
+    <form method="POST" action="{{ url_for('reject') }}">
+        <input type="submit" name="action" value="Reject">
+    </form>
+</body>
+</html>

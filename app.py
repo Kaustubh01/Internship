@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, render_template, session
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name, set_internship_status
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -34,12 +34,30 @@ def incharge_dashboard():
         data.append(
             {
                 "name":get_student_name(internship.prn).split()[0].lower().capitalize() +' '+ get_student_name(internship.prn).split()[1].lower().capitalize() +' '+ get_student_name(internship.prn).split()[2].lower().capitalize(),
-                "internship":internship
+                "internship":internship,
+                "is_pending": True
             }
         )
         print()
     return render_template('incharge_dashboard.html', data = data)
 
+@app.route('/view_internship/<int:internship_id>', methods = ['GET', 'POST'])
+def view_internship(internship_id):
+    id = internship_id
+    session['internship_id'] = id
+    return render_template('internship_view.html')
+
+@app.route('/approve', methods = ['POST'])
+def approve():
+    if request.method == 'POST' and request.form['action'] == 'Approve':
+        set_internship_status(session.get('internship_id'), 'Approved')
+    return redirect(url_for('incharge_dashboard'))
+
+@app.route('/reject', methods = ['POST'])
+def reject():
+    if request.method == 'POST' and request.form['action'] == 'Reject':
+        set_internship_status(session.get('internship_id'), 'Rejected')
+    return redirect(url_for('incharge_dashboard'))
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():

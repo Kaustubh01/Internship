@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, render_template, session
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -14,7 +14,32 @@ def index():
         return redirect(url_for('register'))
     elif selected_button == 'login':
         return redirect(url_for('login'))
+    elif selected_button == 'login_incharge':
+        return redirect(url_for('incharge_login'))
     return render_template('index.html')
+   
+
+@app.route('/incharge_login', methods=['GET','POST'])
+def incharge_login():
+    if request.method == 'POST':
+        return redirect(url_for('incharge_dashboard'))
+
+    return render_template('incharge_login.html')
+
+@app.route('/incharge_dashboard', methods = ['GET', 'POST'])
+def incharge_dashboard():
+    data = []
+    internships = get_all_internships()
+    for internship in internships:
+        data.append(
+            {
+                "name":get_student_name(internship.prn).split()[0].lower().capitalize() +' '+ get_student_name(internship.prn).split()[1].lower().capitalize() +' '+ get_student_name(internship.prn).split()[2].lower().capitalize(),
+                "internship":internship
+            }
+        )
+        print()
+    return render_template('incharge_dashboard.html', data = data)
+
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():

@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import sessionmaker
 
 db = SQLAlchemy()
 
@@ -55,7 +56,13 @@ def add_internship(prn, organization, year, roll_no, duration, start_date, end_d
 def get_internships_organizations(prn):
     return Internship.query.filter_by(prn=prn).all()
 
+def get_all_internships():
+    return Internship.query.all()
+
+def get_student_name(prn):
+    student = Student.query.get(prn)
+    return student.name
+
 
 def init_app(app):
     db.init_app(app)
-

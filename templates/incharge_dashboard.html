@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Incharge Dashboard</h1>
+    <table id="internships-table">
+        <tr>
+            <th>Sr. no.</th>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Duration</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+        </tr>
+        {% for item in data %}
+        <tr>
+            <td>{{ item.internship.internship_id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.duration }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td><button>{{ item.internship.status }}</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -35,7 +35,9 @@ def incharge_dashboard():
             {
                 "name":get_student_name(internship.prn).split()[0].lower().capitalize() +' '+ get_student_name(internship.prn).split()[1].lower().capitalize() +' '+ get_student_name(internship.prn).split()[2].lower().capitalize(),
                 "internship":internship,
-                "is_pending": True
+                "is_pending": internship.status == "pending",
+                "is_approved": internship.status == "Approved",
+                "is_rejected": internship.status == "Rejected",
             }
         )
         print()
@@ -114,6 +116,7 @@ def dashboard():
 
 @app.route('/add_new_internship', methods=['POST','GET'])
 def add_new_internship():
+    days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     if request.method == 'POST':
         academic_year = request.form.get('academic_year')
         student_class = request.form.get('class')
@@ -123,12 +126,15 @@ def add_new_internship():
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         work_time = request.form.get('work_time')
-        days = request.form.get('days')
 
-        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, roll_no= roll_no, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days, std_class=student_class)
+        selected_days = request.form.getlist('selected_days')
+        days_string = ', '.join([str(day) for day in selected_days])
+
+
+        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, roll_no= roll_no, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class)
         
         return redirect(url_for('dashboard'))
-    return render_template('request_internship.html')
+    return render_template('request_internship.html',days = days)
 
 @app.route('/logout')
 def logout():

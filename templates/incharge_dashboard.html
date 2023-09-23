@@ -18,9 +18,11 @@
     <h1>Incharge Dashboard</h1>
 
     <h3>Pending Requests</h3>
-    <table id="internships-table">
+
+    <table id="pending-internships-table">
+        {% for item in data %}
+        {% if item.is_pending %}
         <tr>
-            <th>Sr. no.</th>
             <th>Student Name</th>
             <th>Class</th>
             <th>Internship Organization</th>
@@ -28,12 +30,11 @@
             <th>Start and End Dates</th>
             <th>Working Days</th>
             <th>Working Hours</th>
+            <th>Status</th>
             <th></th>
         </tr>
-
-        {% for item in data %}
+        
         <tr>
-            <td>{{ item.internship.internship_id }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.internship.std_class }}</td>
             <td>{{ item.internship.organization }}</td>
@@ -41,12 +42,49 @@
             <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
+            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+        </tr>     
+        
+        {% endif %}
+        {% endfor %}
+    </table>
+
+
+    <h3>Acknowledged Internships</h3>
+    <table id="acknowledged-internships-table">
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Duration</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        
+        {% for item in data %}
+        {% if item.is_approved or item.is_rejected %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.duration }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
             <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>
+        {% endif %}
         {% endfor %}
+        
         <tr>
             <td></td>
         </tr>
     </table>
+
 </body>
 </html>

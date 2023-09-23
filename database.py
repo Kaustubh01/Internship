@@ -21,7 +21,7 @@ class Internship(db.Model):
     start_date = db.Column(db.Date)
     end_date = db.Column(db.Date)
     work_time =db.Column(db.String)
-    days = db.Column(db.Integer)
+    days = db.Column(db.String)
     status = db.Column(db.String, default='pending')
 
 def get_student(prn):

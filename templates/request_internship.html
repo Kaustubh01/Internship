@@ -98,8 +98,15 @@
             <label for="work_time">Work-Time:</label>
             <input type="text" name="work_time" id="work_time" required>
             
-            <label for="days">Days:</label>
-            <input type="number" name="days" id="days" required>
+            <label for="days">Select Working Days:</label>
+            <ul>
+                {% for day in days %}
+                <li>
+                    <input type="checkbox" name="selected_days" value="{{ day }}">
+                    {{ day }}
+                </li>
+                {% endfor %}
+            </ul>
             
             <input type="submit" value="Submit">
         </form>

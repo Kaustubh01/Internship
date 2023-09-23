@@ -17,7 +17,7 @@
         </form>
         <ul>
             {% for item in data %}
-                <li> <button disabled> {{ item.internship.organization }}</button> status: {{ item.internship.status }}
+                <li> <p > {{ item.internship.organization }}  status: {{ item.internship.status }}</p> 
                 {% if item.status %}
                 <a href="#">Upload offer letter</a>
                 {% endif %}

@@ -100,10 +100,16 @@ def set_password():
 
 @app.route('/dashboard')
 def dashboard():
+    data = []
     internships = get_internships_organizations(session.get('prn'))
+    for internship in internships:
+        data.append({
+            "status":internship.status =="Approved",
+            "internship":internship
+        })
     student_name = session.get('student')
     first_name = student_name.split()[1].lower().capitalize()
-    return render_template('dashboard.html', student_name = first_name,internships = internships)
+    return render_template('dashboard.html', student_name = first_name,data = data)
 
 
 @app.route('/add_new_internship', methods=['POST','GET'])

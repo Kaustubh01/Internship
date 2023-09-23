@@ -16,8 +16,12 @@
             <button type="submit">Request Internship</button>
         </form>
         <ul>
-            {% for internship in internships %}
-                <li> <button disabled> {{ internship.organization }}</button> status: {{ internship.status }}</li>
+            {% for item in data %}
+                <li> <button disabled> {{ item.internship.organization }}</button> status: {{ item.internship.status }}
+                {% if item.status %}
+                <a href="#">Upload offer letter</a>
+                {% endif %}
+                </li>
             {% endfor %}
 
         </ul>

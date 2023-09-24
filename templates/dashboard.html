@@ -17,10 +17,26 @@
         </form>
         <ul>
             {% for item in data %}
-                <li> <p > {{ item.internship.organization }}  status: {{ item.internship.status }}</p> 
+                <li> 
+                    <p > {{ item.internship.organization }}  status: {{ item.internship.status }}</p> 
                 {% if item.status %}
-                <a href="#">Upload offer letter</a>
+                    <a href="{{ url_for('upload_file') }}">Upload offer letter</a><br>
+                    {% if item.is_completed %}
+                        Report:
+                        {% if item.has_report %}
+                            <p>Submitted</p><br>
+                        {% else %}
+                            <a href="{{ url_for('report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a><br>
+                        {% endif %}
+                        Feedback:
+                        {% if item.has_feedback %}
+                            <p>Submitted</p><br>
+                        {% else %}
+                            <a href="{{ url_for('feedback_form',internship_id = item.internship.internship_id) }}">Submit Internship Feedback</a>
+                        {% endif %}
+                        {% endif %}
                 {% endif %}
+                
                 </li>
             {% endfor %}
 

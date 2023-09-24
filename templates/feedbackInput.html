@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='feedbackInput.css') }}">
+    <title>Feedback Form</title>
+</head>
+<body>
+    <h1>Feedback Form</h1>
+
+    <form action="{{ url_for('feedback_form', internship_id = id) }}" method="post">
+
+        <p>Scale for the questionnaire given below:</p>
+        <ul>
+            <li>5 Strongly agree</li>
+            <li>4 Agree</li>
+            <li>3 Neutral</li>
+            <li>2 Disagree</li>
+            <li>1 Strongly disagree</li>
+            <li>N.A. Not applicable</li>
+        </ul>
+
+        <label for="q1">Was effective at applying what she/he learned in the classroom to her internship?</label>
+        <select id="q1" name="q1" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q2">I received sufficient instruction or project explanations.</label>
+        <select id="q2" name="q2" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q3">My supervisor and I met on a regular basis, and I continuously received constructive criticism.</label>
+        <select id="q3" name="q3" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q4">The work I performed was challenging and stimulating.</label>
+        <select id="q4" name="q4" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q5">I worked effectively with others on team projects.</label>
+        <select id="q5" name="q5" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q6">This experience gave me a realistic preview of the career field.</label>
+        <select id="q6" name="q6" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q7">I had a better understanding of the concepts, theories, and skills in the course of study.</label>
+        <select id="q7" name="q7" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+        <label for="q8">Evaluate the department's or institute's internship program.</label>
+        <select id="q8" name="q8" required>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+            <option value="NA">NA</option>
+        </select><br>
+
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

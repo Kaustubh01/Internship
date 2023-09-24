@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, request, render_template, session
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name, set_internship_status
+from datetime import datetime
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -107,10 +108,15 @@ def dashboard():
     for internship in internships:
         data.append({
             "status":internship.status =="Approved",
-            "internship":internship
+            "internship":internship,
+            "is_completed":internship.end_date >=datetime.now().date(),
+            "has_report":internship.report == 'submitted',
+            "has_feeback":internship.feedback == 'submitted'
         })
     student_name = session.get('student')
     first_name = student_name.split()[1].lower().capitalize()
+
+
     return render_template('dashboard.html', student_name = first_name,data = data)
 
 
@@ -135,6 +141,66 @@ def add_new_internship():
         
         return redirect(url_for('dashboard'))
     return render_template('request_internship.html',days = days)
+
+@app.route('/upload_offer_letter', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        uploaded_file = request.files['file']
+        if uploaded_file:
+            file_path = f"uploads/{uploaded_file.filename}"
+            uploaded_file.save(file_path)
+            return f"File '{uploaded_file.filename}' has been uploaded successfully!"
+    
+    return render_template('upload.html')
+
+@app.route('/report-form/<int:internship_id>', methods=['GET', 'POST'])
+def report_form(internship_id):
+    id = internship_id
+    if request.method == 'POST':
+        
+        session['internship_id'] = id
+
+        mobile = request.form['mobile']
+        email = request.form['email']
+        role = request.form['role']
+        employer_email = request.form['employerEmail']
+        supervisor_name = request.form['supervisorName']
+        supervisor_email = request.form['supervisorEmail']
+        supervisor_contact = request.form['supervisorContact']
+        project_title = request.form['projectTitle']
+        work_done = request.form['workDone']
+        resources = request.form['resources']
+        learnings = request.form['learnings']
+        set_internship_report(id=id, std_mobile=mobile,std_email=email,roll_as_intern=role,emp_email=employer_email,supervisor_name=supervisor_name, supervisor_email=supervisor_email, supervisor_phone=supervisor_contact,project_title=project_title,project_desc=work_done, resources=resources, learnings=learnings)
+
+        update_internship_report_status(id)
+        
+        return redirect(url_for('dashboard'))
+
+    return render_template('reportInput.html',id = id)
+
+@app.route('/feedback-form/<int:internship_id>', methods=['GET','POST'])
+def feedback_form(internship_id):
+    id = internship_id
+    if request.method == 'POST':
+        
+        session['internship_id'] = id
+
+        q1 = request.form['q1']
+        q2 = request.form['q2']
+        q3 = request.form['q3']
+        q4 = request.form['q4']
+        q5 = request.form['q5']
+        q6 = request.form['q6']
+        q7 = request.form['q7']
+        q8 = request.form['q8']
+
+        set_internship_feedback(id=id, question_1=q1, question_2=q2, question_3=q3, question_4=q4, question_5=q5,question_6=q6,question_7=q7, question_8=q8)
+
+        update_internship_feedback_status(id)
+        
+        return redirect(url_for('dashboard'))
+    return render_template('feedbackInput.html', id =id)
 
 @app.route('/logout')
 def logout():

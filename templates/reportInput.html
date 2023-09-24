@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reportInput.css') }}">
+    <title>Internship Information</title>
+</head>
+<body>
+
+    <p class="title">DEPARTMENT OF INFORMATION TECHNOLOGY</p>
+
+    <h1>Internship Report</h1>
+
+    <form action="{{ url_for('report_form',internship_id = id) }}" method="post">
+
+        <label for="mobile">Mobile:</label>
+        <input type="tel" id="mobile" name="mobile" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+
+        <label for="role">Role as intern:</label>
+        <input type="text" id="role" name="role" required><br>
+
+        <label for="employerEmail">Employer's email id:</label>
+        <input type="email" id="employerEmail" name="employerEmail" required><br>
+
+        <label for="supervisorName">Internship Supervisor name:</label>
+        <input type="text" id="supervisorName" name="supervisorName" required><br>
+
+        <label for="supervisorEmail">Internship Supervisor Email id:</label>
+        <input type="email" id="supervisorEmail" name="supervisorEmail" required><br>
+
+        <label for="supervisorContact">Internship Supervisor contact:</label>
+        <input type="tel" id="supervisorContact" name="supervisorContact" required><br>
+
+        <label for="projectTitle">Internship area/Project Title:</label>
+        <input type="text" id="projectTitle" name="projectTitle" required><br>
+
+        <label for="workDone">Work done in Brief:</label>
+        <textarea id="workDone" name="workDone" rows="4" cols="50" required></textarea><br>
+
+        <label for="resources">Resources (Tools used):</label>
+        <input type="text" id="resources" name="resources" required><br>
+
+        <label for="learnings">Key Learnings from the Internship:</label>
+        <textarea id="learnings" name="learnings" rows="4" cols="50" required></textarea><br>
+
+        <input type="submit" value="report-input">
+    </form>
+</body>
+</html>

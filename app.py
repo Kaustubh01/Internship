@@ -138,9 +138,10 @@ def dashboard():
         data.append({
             "status":internship.status =="Approved",
             "internship":internship,
-            "is_completed":internship.end_date >=datetime.now().date(),
+            "is_completed":internship.end_date <=datetime.now().date(),
             "has_report":internship.report == 'submitted',
-            "has_feeback":internship.feedback == 'submitted'
+            "has_feedback":internship.feedback == 'submitted',
+            "has_offer_letter":internship.offer_letter == 'submitted'
         })
     student_name = session.get('student')
     first_name = student_name.split()[1].lower().capitalize()

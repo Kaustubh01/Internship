@@ -20,7 +20,11 @@
                 <li> 
                     <p > {{ item.internship.organization }}  status: {{ item.internship.status }}</p> 
                 {% if item.status %}
-                    <a href="{{ url_for('upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a><br>
+                    {% if item.has_offer_letter %}
+                        <p>Offer Letter: Submitted</p>
+                    {% else %}
+                        <a href="{{ url_for('upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a><br>
+                    {% endif %}
                     {% if item.is_completed %}
                         Report:
                         {% if item.has_report %}

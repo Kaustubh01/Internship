@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -171,14 +171,30 @@ def add_new_internship():
         return redirect(url_for('dashboard'))
     return render_template('request_internship.html',days = days)
 
-@app.route('/upload_offer_letter', methods=['GET', 'POST'])
-def upload_file():
+@app.route('/upload_offer_letter/<int:internship_id>', methods=['GET', 'POST'])
+def upload_file(internship_id):
+    id = internship_id
     if request.method == 'POST':
-        uploaded_file = request.files['file']
-        if uploaded_file:
-            file_path = f"uploads/{uploaded_file.filename}"
-            uploaded_file.save(file_path)
-            return f"File '{uploaded_file.filename}' has been uploaded successfully!"
+
+        if 'file' not in request.files:
+            return "No file part"
+    
+        file = request.files['file']
+
+        if file.filename == '':
+            return "No selected file"
+
+        if file:
+            base_directory = f"students/{session.get('prn')}"
+
+            offer_letter_folder_path = os.path.join(base_directory, 'offer_letter')
+            if not os.path.exists(offer_letter_folder_path):
+                os.makedirs(offer_letter_folder_path)
+            new_filename = f'{id}.pdf'
+            file.filename = new_filename
+            file.save(f"{offer_letter_folder_path}/" + file.filename)
+            update_internship_offer_letter_status(id)
+            return redirect(url_for('dashboard'))
     
     return render_template('upload.html')
 

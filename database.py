@@ -25,6 +25,8 @@ class Internship(db.Model):
     status = db.Column(db.String, default='pending')
     feedback = db.Column(db.String)
     report = db.Column(db.String)
+    offer_letter = db.Column(db.String)
+
 class Report(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     std_mobile = db.Column(db.Integer)
@@ -99,6 +101,13 @@ def update_internship_feedback_status(id):
     internship = Internship.query.get(id)
     if internship:
         internship.feedback = "submitted"
+        db.session.commit()
+        print('internship status updated')
+
+def update_internship_offer_letter_status(id):
+    internship = Internship.query.get(id)
+    if internship:
+        internship.offer_letter = "submitted"
         db.session.commit()
         print('internship status updated')
         

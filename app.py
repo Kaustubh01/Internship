@@ -1,10 +1,12 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from datetime import datetime
+import os
 from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/internship'
+
 
 init_app(app)
 @app.route('/', methods=['GET', 'POST'])
@@ -71,6 +73,12 @@ def register():
             if prn_id:
                 session['prn']= prn_number
                 session['student']= get_student(prn_number).name
+                folder_name = session.get('prn')
+                base_directory = "students"
+
+                student_folder_path = os.path.join(base_directory, folder_name)
+                os.makedirs(student_folder_path)
+                print('folder created')
                 
                 return redirect(url_for('set_password'))
             else:
@@ -92,11 +100,32 @@ def login():
             return 'Invalid Credentials'
     return render_template('login.html')
 
+
 @app.route('/set_password',methods = ['POST','GET'])
 def set_password():
+    
+
     if request.method =='POST':
+
+        if 'file' not in request.files:
+            return "No file part"
+    
+        file = request.files['file']
+
+        if file.filename == '':
+            return "No selected file"
+
+        if file:
+            base_directory = f"students/{session.get('prn')}"
+
+            signature_folder_path = os.path.join(base_directory, 'signature')
+            os.makedirs(signature_folder_path)
+            file.save(f"{signature_folder_path}/" + file.filename)
+
         password = request.form.get('password')
+        username = request.form.get('username')
         update_password(password, session.get('prn'))
+
         return redirect(url_for('dashboard'))
     return render_template('set_password.html',name = session.get('student'))
 

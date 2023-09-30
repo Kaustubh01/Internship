@@ -26,6 +26,7 @@ class Internship(db.Model):
     feedback = db.Column(db.String)
     report = db.Column(db.String)
     offer_letter = db.Column(db.String)
+    certificate = db.Column(db.String)
 
 class Report(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -115,6 +116,13 @@ def update_internship_report_status(id):
     internship = Internship.query.get(id)
     if internship:
         internship.report = "submitted"
+        db.session.commit()
+        print('internship status updated')  
+
+def update_internship_certificate_status(id):
+    internship = Internship.query.get(id)
+    if internship:
+        internship.certificate = "submitted"
         db.session.commit()
         print('internship status updated')  
 

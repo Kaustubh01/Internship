@@ -67,7 +67,7 @@
     <div class="form-container">
         <form action="{{ url_for('add_new_internship') }}" method="post">
             <label for="academic_year">Academic Year:</label>
-            <input type="text" name="academic_year" id="academic_year" required>
+            <input type="text" name="academic_year" id="academic_year" required placeholder="YYYY-YYYY"
             
             <label for="class">Class:</label>
             <select id="class" name="class">
@@ -87,7 +87,7 @@
             <input type="text" name="organization_name" id="organization_name" required>
             
             <label for="duration">Duration:</label>
-            <input type="text" name="duration" id="duration" required>
+            <input type="number" name="duration" id="duration" required placeholder="in weeks">
             
             <label for="start_date">Start Date:</label>
             <input type="date" name="start_date" id="start_date" required>
@@ -96,7 +96,7 @@
             <input type="date" name="end_date" id="end_date" required>
             
             <label for="work_time">Work-Time:</label>
-            <input type="text" name="work_time" id="work_time" required>
+            <input type="text" name="work_time" id="work_time" required placeholder="HH:MM am - HH:MM pm">
             
             <label for="days">Select Working Days:</label>
             <ul>

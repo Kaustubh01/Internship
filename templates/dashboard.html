@@ -23,25 +23,31 @@
                     {% if item.has_offer_letter %}
                         <p>Offer Letter: Submitted</p>
                     {% else %}
-                        <a href="{{ url_for('upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a><br>
+                        <a href="{{ url_for('upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a>
                     {% endif %}
                     {% if item.is_completed %}
-                        Report:
+                    
+                    {% if item.has_certificate %}
+                        <p>Certificate: Submitted</p>
+                    {% else %}
+                        <a href="{{ url_for('upload_certificate', internship_id = item.internship.internship_id) }}">Submit Completion Certificate</a>
+                    {% endif %}
+                        
                         {% if item.has_report %}
-                            <p>Submitted</p><br>
+                            <p>Report: Submitted</p>
                         {% else %}
-                            <a href="{{ url_for('report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a><br>
+                            <a href="{{ url_for('report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a>
                         {% endif %}
-                        Feedback:
+                        
                         {% if item.has_feedback %}
-                            <p>Submitted</p><br>
+                            <p>Feedback: Submitted</p>
                         {% else %}
                             <a href="{{ url_for('feedback_form',internship_id = item.internship.internship_id) }}">Submit Internship Feedback</a>
                         {% endif %}
                         {% endif %}
                 {% endif %}
                 
-                </li>
+                </li><br>
             {% endfor %}
 
         </ul>

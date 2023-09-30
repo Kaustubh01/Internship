@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -141,7 +141,8 @@ def dashboard():
             "is_completed":internship.end_date <=datetime.now().date(),
             "has_report":internship.report == 'submitted',
             "has_feedback":internship.feedback == 'submitted',
-            "has_offer_letter":internship.offer_letter == 'submitted'
+            "has_offer_letter":internship.offer_letter == 'submitted',
+            "has_certificate":internship.certificate == 'submitted'
         })
     student_name = session.get('student')
     first_name = student_name.split()[1].lower().capitalize()
@@ -198,6 +199,32 @@ def upload_file(internship_id):
             return redirect(url_for('dashboard'))
     
     return render_template('upload.html')
+
+@app.route('/certificate/<int:internship_id>', methods = ['GET', 'POST'])
+def upload_certificate(internship_id):
+    id = internship_id
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return "No file part"
+    
+        file = request.files['file']
+
+        if file.filename == '':
+            return "No selected file"
+
+        if file:
+            base_directory = f"students/{session.get('prn')}"
+
+            completion_certificate_folder_path = os.path.join(base_directory, 'completion_certificate')
+            if not os.path.exists(completion_certificate_folder_path):
+                os.makedirs(completion_certificate_folder_path)
+            new_filename = f'{id}.pdf'
+            file.filename = new_filename
+            file.save(f"{completion_certificate_folder_path}/" + file.filename)
+            update_internship_certificate_status(id)
+        return redirect(url_for('dashboard'))
+
+    return render_template('upload_certificate.html',id = id)
 
 @app.route('/report-form/<int:internship_id>', methods=['GET', 'POST'])
 def report_form(internship_id):

@@ -7,6 +7,44 @@
 </head>
 <body>
     <h1>Internship View</h1>
+    <div class="internship-view">
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <td>{{ student.name }}</td>
+                <th>Academic Year:</th>
+                <td>{{ internship.year }}</td>
+            </tr>
+            <tr>
+                
+
+                <th>Class</th>
+                <td>{{ internship.std_class }}</td>
+            </tr>
+            <tr>
+                <th>Organization</th>
+                <td>{{ internship.organization }}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>{{ internship.duration }} Weeks</td>
+                <th>Start Date</th>
+                <td>{{ internship.start_date }}</td>
+                <th>End Date</th>
+                <td>{{ internship.end_date }}</td>
+                <th>Work time</th>
+                <td>{{ internship.work_time }}</td>
+            </tr>
+            <tr>
+                <th>Work Days</th>
+                <td>{{ internship.days }}</td>
+            </tr>
+        </table>
+        
+        
+    </div>
+
+
     <form method="POST" action="{{ url_for('approve') }}">
         <input type="submit" name="action" value="Approve">
     </form>

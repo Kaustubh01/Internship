@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -49,8 +49,11 @@ def incharge_dashboard():
 @app.route('/view_internship/<int:internship_id>', methods = ['GET', 'POST'])
 def view_internship(internship_id):
     id = internship_id
+    internship = get_internship(id)
+    student = get_student(internship.prn)
+    print(internship)
     session['internship_id'] = id
-    return render_template('internship_view.html')
+    return render_template('internship_view.html', internship = internship, student = student)
 
 @app.route('/approve', methods = ['POST'])
 def approve():

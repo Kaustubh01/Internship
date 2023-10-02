@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
     <title>Register</title>
 </head>
 <body>
+    <div class="content">
     <form action="{{ url_for('register') }}" method="post">
-        <input type="number" placeholder="Enter your PRN Number" name="prn_number">
-        <input type="submit" value="Register">
+        <h1>Sign Up</h1>
+        <input type="number" placeholder="Enter your PRN Number" name="prn_number" class="inputs">
+        <input type="submit" value="Register" class="button">
     </form>
+    </div>
 </body>
 </html>

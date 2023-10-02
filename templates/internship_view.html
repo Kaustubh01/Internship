@@ -6,7 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Internship View</h1>
     <div class="internship-view">
         <table>
             <tr>
@@ -14,6 +13,8 @@
                 <td>{{ student.name }}</td>
                 <th>Academic Year:</th>
                 <td>{{ internship.year }}</td>
+                <th>Status</th>
+                <td>{{ internship.status }}</td>
             </tr>
             <tr>
                 
@@ -39,17 +40,61 @@
                 <th>Work Days</th>
                 <td>{{ internship.days }}</td>
             </tr>
+
+            <tr>
+                <th>Offer Letter</th>
+                <td>
+                    {% if has_offer_letter %}
+                    <a href="">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Completion Certificate</th>
+                <td>
+                    {% if has_certificate %}
+                    <a href="">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Report</th>
+                <td>
+                    {% if has_report %}
+                    <a href="{{ url_for('view_feedback') }}">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Feedback</th>
+                <td>
+                    {% if has_feedback %}
+                    <a href="{{ url_for('view_feedback') }}">View</a>
+                    {% else %}
+                    <p>Not Submitted yet</p>
+                    {% endif %}
+                </td>
+            </tr>
         </table>
         
         
     </div>
 
-
+    {% if not is_acknowledged %}
     <form method="POST" action="{{ url_for('approve') }}">
         <input type="submit" name="action" value="Approve">
     </form>
     <form method="POST" action="{{ url_for('reject') }}">
         <input type="submit" name="action" value="Reject">
     </form>
+    {% endif %}
+
+
 </body>
 </html>

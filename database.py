@@ -138,5 +138,11 @@ def set_internship_feedback(id,question_1,question_2,question_3,question_4,quest
 def get_internship(id):
         return Internship.query.get(id)
 
+def get_feedback(id):
+    return Feedback.query.get(id)
+
+def get_report(id):
+    return Report.query.get(id)
+
 def init_app(app):
     db.init_app(app)

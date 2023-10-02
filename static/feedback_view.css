@@ -1,0 +1,91 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    margin: 0 auto;
+    max-width: 800px; 
+    font-family: Arial, sans-serif;
+    padding: 0px;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title img {
+    max-width: 100%;
+    height: auto;
+}
+
+.content h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+td, th {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+}
+
+.data {
+    text-align: center;
+}
+
+#internshipFeedback {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.numbers {
+    width: 60px;
+}
+
+.feedback3 {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.feedback3 img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.instructions {
+    margin-top: 30px;
+}
+
+ul li {
+    list-style: none;
+}
+
+button {
+    margin-bottom: 30px;
+    background-color: rgb(24, 101, 255);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    float: right;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media print {
+    button {
+        display: none;
+    }
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="wclass="data" idth=device-wclass="data" idth, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='feedback_view.css') }}">
+    <title>Feedback</title>
+</head>
+<body>
+    <div class="title">
+        <img src="{{ url_for('static', filename='header.png') }}" alt="">
+        <p>DEPARTMENT OF INFORMATION TECHNOLOGY</p>
+    </div>
+    <div class="content">
+        <h1>Feedback Form</h1>
+    <table id="internshipDetails">
+        <tr>
+            <td colspan="2">Name of Student</td>
+            <td class="data" id="nameOfStudent" colspan="4">{{ student.name }}</td>
+        </tr>
+        <tr>
+            <td>Year</td>
+            <td class="data" id="year">{{ internship.year }}</td>
+            <td>Branch</td>
+            <td class="data" id="branch">IT</td>
+            <td>Mobile:</td>
+            <td class="data"id="mobile">{{ report.std_mobile }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Email</td>
+            <td class="data" id="studentEmail" colspan="6">{{ report.std_email }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Internship Organization</td>
+            <td colspan="4" class="data" id="organization">{{ internship.organization }}</td>
+            <td>Duration</td>
+            <td class="data" id="duration">{{ internship.duration }} weeks</td>
+        </tr>
+        <tr>
+            <td colspan="2">Start Date</td>
+            <td colspan="2" class="data" id="startDate">{{ internship.start_date }}</td>
+            <td colspan="2">End Date</td>
+            <td colspan="2" class="data" id="endDate">{{ internship.end_date }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Roll as Intern</td>
+            <td colspan="4" class="data" id="rollAsIntern">{{ report.roll_as_intern }}</td>
+        </tr>
+    </table>
+
+    <p class="instructions">
+        Scale for the questionnaire given below
+        <ul>
+            <li>5 Strongly agree</li>
+            <li>4 Agree</li>
+            <li>3 Neutral</li>
+            <li>2 Disagree</li>
+            <li>1 Strongly disagree</li>
+            <li>N.A. Not applicable</li>
+        </ul>
+    </p>
+
+    <table id="internshipFeedback">
+        <tr>
+            <th class="numbers">Sr no.</th>
+            <th>Statement</th>
+            <th class="numbers">Rating</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Was effective at applying what she/he learned in the classroom to her internship?</td>
+            <td id="response1">{{ feedback.question_1 }}</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>I received sufficient instruction or project explanations.</td>
+            <td id="response2">{{ feedback.question_2 }}</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>My supervisor and I met on a regular basis, and I continuously received constructive criticism.</td>
+            <td id="response3">{{ feedback.question_3 }}</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>The work I performed was challenging and stimulating.</td>
+            <td id="response4">{{ feedback.question_4 }}</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>I worked effectively with others on team projects</td>
+            <td id="response5">{{ feedback.question_5 }}</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>This experience gave me realistic preview of the career field</td>
+            <td id="response6">{{ feedback.question_6 }}</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>I had better understanding of the concepts, theories and skills in the course of study</td>
+            <td id="response7">{{ feedback.question_7 }}</td>
+        </tr>
+            <tr>
+                <td>8</td>
+                <td>Evaluate the department\'s or institute\'s internship program</td>
+                <td id="response8">{{ feedback.question_8 }}</td>
+            </tr>
+        </tr>
+
+    </table>
+
+    <div class="feedback3">        
+        <img src="{{ url_for('static', filename=signature) }}"  id = 'signature-img'alt="">
+        <br>
+        <p id="signature">{{ student.name }}</p>
+        <p id="signatureDate">{{ date }}</p>
+    </div>
+</div>
+    <button id="printButton">Print</button>
+
+        <script>
+
+            const printButton = document.getElementById('printButton')
+            printButton.addEventListener('click',()=>{
+                print()
+            })
+        </script>
+</body>
+</html>

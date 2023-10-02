@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='report_view.css') }}">
+    <title>Report Form</title>
+</head>
+<body>  
+    <div class="title">
+        <img src="{{ url_for('static', filename='header.png') }}" alt="">
+        <p>DEPARTMENT OF INFORMATION TECHNOLOGY</p>
+    </div>
+    <div class="content">
+    <table id="internshipDetails">
+        <h1>Internship Report</h1>
+        <tr>
+            <td colspan="2">Name of Student</td>
+            <td class="data" id="nameOfStudent" colspan="4">{{ student.name }}</td>
+        </tr>
+        <tr>
+            <td>Class (While Internship is going on)</td>
+            <td class="data" id="class">IT</td>
+            <td>Year of Internship</td>
+            <td class="data" id="year">{{ internship.year }}</td>
+            <td>Mobile:</td>
+            <td class="data"id="mobile">{{ report.std_mobile }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Email</td>
+            <td class="data" id="studentEmail" colspan="6">{{ report.std_email }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Internship Organization</td>
+            <td colspan="4" class="data" id="organization">{{ report.organization }}</td>
+            <td>Duration</td>
+            <td class="data" id="duration">{{ internship.duration }} weeks</td>
+        </tr>
+        <tr>
+            <td colspan="2">Start Date</td>
+            <td colspan="2" class="data" id="startDate">{{ internship.start_date }}</td>
+            <td colspan="2">End Date</td>
+            <td colspan="2" class="data" id="endDate">{{ internship.end_date }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Roll as Intern</td>
+            <td colspan="2" class="data" id="rollAsIntern">{{ report.roll_as_intern }}</td>
+            <td colspan="2">Employer's Email ID</td>
+            <td colspan="2" class="data" id="employerEmail">{{ report.emp_email }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Internship Supervisior Name</td>
+            <td colspan="6" class="data" id="s_name">{{ report.supervisor_name }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">Internship Supervisior Email ID</td>
+            <td colspan="2" class="data" id="s_email">{{ report.supervisor_email }}</td>
+            <td colspan="2">Internship Supervisior Contact</td>
+            <td colspan="2" class="data" id="s_contact">{{ report.supervisor_phone }}</td>
+        </tr>
+    </table>
+
+    <section class="report">
+        <div class="part">
+            <label for="">Intership Area/Project Title</label>
+            <textarea name="" id="i_title" cols="30" rows="10">{{ report.project_title }}</textarea>
+        </div>
+        <div class="part">
+            <label for="">Work Done in Brief (Attach Diagrams/Projects/Results if required)</label>
+            <textarea name="" id="work_done" cols="30" rows="10">{{ report.project_desc }}</textarea>
+        </div>
+        <div class="part">
+            <label for="">Resources (Tools used)</label>
+            <textarea name="" id="resources" cols="30" rows="10">{{ report.resources }}</textarea>
+        </div>
+        <div class="part">
+            <label for="">Key Learnings from the Internship</label>
+            <textarea name="" id="key_learning" cols="30" rows="10">{{ report.learnings }}</textarea>
+        </div>
+    </section>
+
+
+    <div class="feedback3">        
+        <img src="{{ signature }}" alt="">
+        <br>
+        <p id="signature">{{ student.name }}</p>
+        <p id="signatureDate">{{ date }}</p>
+    </div>
+</div>
+    <button id="printButton" onclick="printPage()">Print</button>
+    <script>
+        function printPage() {
+            window.print();
+        }
+    </script>
+
+</body>
+</html>

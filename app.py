@@ -1,7 +1,9 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report
+
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
@@ -51,9 +53,17 @@ def view_internship(internship_id):
     id = internship_id
     internship = get_internship(id)
     student = get_student(internship.prn)
-    print(internship)
+
     session['internship_id'] = id
-    return render_template('internship_view.html', internship = internship, student = student)
+
+    is_acknowledged = internship.status == 'Approved' or internship.status == 'Rejected'
+    has_offer_letter = internship.offer_letter == 'submitted'
+    has_certificate = internship.certificate == 'submitted'
+    has_report = internship.report == 'submitted'
+    has_feedback = internship.feedback == 'submitted'
+
+
+    return render_template('internship_view.html', internship = internship, student = student, is_acknowledged = is_acknowledged, has_offer_letter = has_offer_letter, has_certificate = has_certificate, has_report = has_report, has_feedback = has_feedback)
 
 @app.route('/approve', methods = ['POST'])
 def approve():
@@ -66,6 +76,25 @@ def reject():
     if request.method == 'POST' and request.form['action'] == 'Reject':
         set_internship_status(session.get('internship_id'), 'Rejected')
     return redirect(url_for('incharge_dashboard'))
+
+@app.route('/view_report')
+def view_report():
+    internship = get_internship(session.get('internship_id'))
+    student = get_student(internship.prn)
+    report = get_report(session.get('internship_id'))
+    return render_template('report_view.html' , report = report, internship = internship, student = student)
+
+@app.route('/view_feedback')
+def view_feedback():
+    internship = get_internship(session.get('internship_id'))
+    student = get_student(internship.prn)
+    report = get_report(session.get('internship_id'))
+    feedback = get_feedback(session.get('internship_id'))
+
+    signature = [f for f in os.listdir(f"students/{student.prn}/signature/")]
+    signature_url = f"students/{student.prn}/signature/{signature[0]}"
+
+    return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report, signature = signature_url)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -171,7 +200,7 @@ def add_new_internship():
         days_string = ', '.join([str(day) for day in selected_days])
 
 
-        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, roll_no= roll_no, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class)
+        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class)
         
         return redirect(url_for('dashboard'))
     return render_template('request_internship.html',days = days)

@@ -82,6 +82,7 @@ def view_report():
     internship = get_internship(session.get('internship_id'))
     student = get_student(internship.prn)
     report = get_report(session.get('internship_id'))
+    signature_url = url_for('static', filename=f"student/{internship.prn}/signature/signature.png")
     return render_template('report_view.html' , report = report, internship = internship, student = student)
 
 @app.route('/view_feedback')
@@ -91,10 +92,9 @@ def view_feedback():
     report = get_report(session.get('internship_id'))
     feedback = get_feedback(session.get('internship_id'))
 
-    signature = [f for f in os.listdir(f"students/{student.prn}/signature/")]
-    signature_url = f"students/{student.prn}/signature/{signature[0]}"
+    signature_url = url_for('static', filename=f'students/{internship.prn}/signature/signature.png')
 
-    return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report, signature = signature_url)
+    return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report,signature = signature_url)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -106,7 +106,7 @@ def register():
                 session['prn']= prn_number
                 session['student']= get_student(prn_number).name
                 folder_name = session.get('prn')
-                base_directory = "students"
+                base_directory = "static/students"
 
                 student_folder_path = os.path.join(base_directory, folder_name)
                 os.makedirs(student_folder_path)
@@ -148,7 +148,8 @@ def set_password():
             return "No selected file"
 
         if file:
-            base_directory = f"students/{session.get('prn')}"
+            file.filename= 'signature.png'
+            base_directory = f"static/students/{session.get('prn')}"
 
             signature_folder_path = os.path.join(base_directory, 'signature')
             os.makedirs(signature_folder_path)

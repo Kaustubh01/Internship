@@ -10,8 +10,9 @@ form{
     display: block;
         margin-left: auto;
         margin-right: auto;
+        width: 500px;
         
-} */
+}  */
 .indexbuttons{
     width: 250px;
     padding: 10px;

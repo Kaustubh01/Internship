@@ -8,6 +8,7 @@ class Student(db.Model):
     name = db.Column(db.String(30))
     password = db.Column(db.String(255))
     username = db.Column(db.String(30))
+    department = db.Column(db.String(30))
 
 
 class Internship(db.Model):
@@ -61,6 +62,12 @@ def set_student_username(prn, username):
     student = Student.query.get(prn)
     if student:
         student.username = username
+        db.session.commit()
+
+def set_student_department(prn, department):
+    student = Student.query.get(prn)
+    if student:
+        student.department = department
         db.session.commit()
 
 def update_password(password, prn): 

@@ -62,10 +62,10 @@
         }
     </style>
 </head>
-<body>
+<>
     <h1>Internship Request Form</h1>
     <div class="form-container">
-        <form action="{{ url_for('add_new_internship') }}" method="post">
+        <form action="{{ url_for('add_new_internship') }}" id="date-form" method="post">
             <label for="academic_year">Academic Year:</label>
             <input type="text" name="academic_year" id="academic_year" required placeholder="YYYY-YYYY"
             
@@ -109,5 +109,28 @@
             <input type="submit" value="Submit">
         </form>
     </div>
+
+       <!-- Include the Toastr library JS file -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+       <script>
+           // JavaScript code to validate the date range
+           document.getElementById("date-form").onsubmit = function (e) {
+               e.preventDefault();
+   
+               const startDate = new Date(document.getElementById("start_date").value);
+               const endDate = new Date(document.getElementById("end_date").value);
+   
+               if (startDate >= endDate) {
+                   // Display a toast message
+                   toastr.error("Start date should be less than end date", "Date Range Error");
+               }
+               else {
+                // Submit the form if the condition is met
+                this.submit();
+            }
+           };
+       </script>
+   
 </body>
 </html>

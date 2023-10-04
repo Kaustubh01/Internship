@@ -45,7 +45,6 @@ def incharge_dashboard():
                 "is_rejected": internship.status == "Rejected",
             }
         )
-        print()
     return render_template('incharge_dashboard.html', data = data)
 
 @app.route('/view_internship/<int:internship_id>', methods = ['GET', 'POST'])
@@ -193,16 +192,23 @@ def dashboard():
 
 @app.route('/add_new_internship', methods=['POST','GET'])
 def add_new_internship():
+
+    internships = get_all_internships()
+    organizations=[]
+    for internship in internships:
+        if internship.organization not in organizations:
+            organizations.append(internship.organization)
+    print(organizations)
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     if request.method == 'POST':
         academic_year = request.form.get('academic_year')
         student_class = request.form.get('class')
         roll_no = request.form.get('roll_no')
-        organization_name = request.form.get('organization_name')
+        organization_name = request.form.get('organization_list') if request.form.get('organization_name') == '' else request.form.get('organization_name')
         duration = request.form.get('duration')
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
-        work_time = request.form.get('work_time')
+        work_time = f"{request.form.get('work_time_1')} - {request.form.get('work_time_2')}"
 
         selected_days = request.form.getlist('selected_days')
         days_string = ', '.join([str(day) for day in selected_days])
@@ -211,7 +217,7 @@ def add_new_internship():
         add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class)
         
         return redirect(url_for('dashboard'))
-    return render_template('request_internship.html',days = days)
+    return render_template('request_internship.html',days = days, organizations = organizations)
 
 @app.route('/upload_offer_letter/<int:internship_id>', methods=['GET', 'POST'])
 def upload_file(internship_id):

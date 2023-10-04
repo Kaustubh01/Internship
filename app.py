@@ -7,7 +7,7 @@ from database import Student,init_app, add_internship,get_student,  get_internsh
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/internship'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Password@localhost/internship'
 
 
 init_app(app)

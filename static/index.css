@@ -6,12 +6,12 @@ form{
     gap: 20px;
     margin-top: 100px;
 }
-/* .logo{
+.logo{
     display: block;
         margin-left: auto;
         margin-right: auto;
-        
-} */
+        width: 700px;    
+} 
 .indexbuttons{
     width: 250px;
     padding: 10px;
@@ -26,6 +26,7 @@ form{
 }
 .indexbuttons:hover{
     background-color:rgb(0, 92, 184) ;
+    
 }
 @media screen and (max-width: 425px){
     form{

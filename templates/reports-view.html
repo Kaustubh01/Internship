@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accademic Year Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Accademic Year</h1>
+    <div style="width: 60%;">
+        <canvas id="myChart"></canvas>
+    </div>
+    
+    <script>
+        fetch('/get_internship_data')
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Data',
+                            data: data.values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+        scales: {
+            y: {
+                beginAtZero: true, 
+                ticks: {
+                    stepSize: 1, 
+                    min: 0, 
+                }
+            }
+        }
+    }
+                });
+            });
+    </script>
+</body>
+</html>

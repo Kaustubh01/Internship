@@ -16,6 +16,11 @@
 </head>
 <body>
     <h1>Incharge Dashboard</h1>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('accademic_year_reports_view') }}">Reports</a></li>
+        </ul>
+    </nav>
 
     <h3>Pending Requests</h3>
 
@@ -66,6 +71,39 @@
         
         {% for item in data %}
         {% if item.is_approved or item.is_rejected %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
+            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <h3>Completed Internships</h3>
+    <table id="acknowledged-internships-table">
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        
+        {% for item in data %}
+        {% if item.is_completed %}
         <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.internship.std_class }}</td>

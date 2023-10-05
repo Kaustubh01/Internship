@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, render_template, session
+from flask import Flask, redirect, url_for, request, render_template, session, jsonify
 from datetime import datetime
 import os
 from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report, set_student_username, get_student_using_username, set_student_department
@@ -43,9 +43,9 @@ def incharge_dashboard():
                 "is_pending": internship.status == "pending",
                 "is_approved": internship.status == "Approved",
                 "is_rejected": internship.status == "Rejected",
+                "is_completed":internship.status == "completed"
             }
         )
-        print()
     return render_template('incharge_dashboard.html', data = data)
 
 @app.route('/view_internship/<int:internship_id>', methods = ['GET', 'POST'])
@@ -95,6 +95,32 @@ def view_feedback():
     signature_url = url_for('static', filename=f'students/{internship.prn}/signature/signature.png')
 
     return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report,signature = signature_url)
+
+
+@app.route('/accademic-year-report-view')
+def accademic_year_reports_view():
+    return render_template('reports-view.html')
+
+@app.route('/get_internship_data')
+def get_data():
+
+    internships = get_all_internships()
+    years= {}
+    for internship in internships:
+        if internship.status == 'completed':
+            if internship.year not in years:
+                years[f'{internship.year}']=1
+            elif internship.year in years:
+                    years[f'{internship.year}']+=1
+    
+    print(years)
+    data = {'labels': list(years.keys()),
+            'values': list(years.values())}
+    return jsonify(data)
+
+
+
+
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -193,16 +219,23 @@ def dashboard():
 
 @app.route('/add_new_internship', methods=['POST','GET'])
 def add_new_internship():
+
+    internships = get_all_internships()
+    organizations=[]
+    for internship in internships:
+        if internship.organization not in organizations:
+            organizations.append(internship.organization)
+    print(organizations)
     days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     if request.method == 'POST':
         academic_year = request.form.get('academic_year')
         student_class = request.form.get('class')
         roll_no = request.form.get('roll_no')
-        organization_name = request.form.get('organization_name')
+        organization_name = request.form.get('organization_list') if request.form.get('organization_name') == '' else request.form.get('organization_name')
         duration = request.form.get('duration')
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
-        work_time = request.form.get('work_time')
+        work_time = f"{request.form.get('work_time_1')} - {request.form.get('work_time_2')}"
 
         selected_days = request.form.getlist('selected_days')
         days_string = ', '.join([str(day) for day in selected_days])
@@ -211,7 +244,7 @@ def add_new_internship():
         add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class)
         
         return redirect(url_for('dashboard'))
-    return render_template('request_internship.html',days = days)
+    return render_template('request_internship.html',days = days, organizations = organizations)
 
 @app.route('/upload_offer_letter/<int:internship_id>', methods=['GET', 'POST'])
 def upload_file(internship_id):
@@ -227,7 +260,7 @@ def upload_file(internship_id):
             return "No selected file"
 
         if file:
-            base_directory = f"students/{session.get('prn')}"
+            base_directory = f"static/students/{session.get('prn')}"
 
             offer_letter_folder_path = os.path.join(base_directory, 'offer_letter')
             if not os.path.exists(offer_letter_folder_path):
@@ -253,7 +286,7 @@ def upload_certificate(internship_id):
             return "No selected file"
 
         if file:
-            base_directory = f"students/{session.get('prn')}"
+            base_directory = f"static/students/{session.get('prn')}"
 
             completion_certificate_folder_path = os.path.join(base_directory, 'completion_certificate')
             if not os.path.exists(completion_certificate_folder_path):
@@ -311,6 +344,7 @@ def feedback_form(internship_id):
         set_internship_feedback(id=id, question_1=q1, question_2=q2, question_3=q3, question_4=q4, question_5=q5,question_6=q6,question_7=q7, question_8=q8)
 
         update_internship_feedback_status(id)
+        set_internship_status(id, 'completed')
         
         return redirect(url_for('dashboard'))
     return render_template('feedbackInput.html', id =id)

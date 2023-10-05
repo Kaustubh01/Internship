@@ -43,6 +43,7 @@ def incharge_dashboard():
                 "is_pending": internship.status == "pending",
                 "is_approved": internship.status == "Approved",
                 "is_rejected": internship.status == "Rejected",
+                "is_completed":internship.status == "completed"
             }
         )
     return render_template('incharge_dashboard.html', data = data)
@@ -96,17 +97,25 @@ def view_feedback():
     return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report,signature = signature_url)
 
 
-@app.route('/reports-view')
-def reports_view():
+@app.route('/accademic-year-report-view')
+def accademic_year_reports_view():
     return render_template('reports-view.html')
 
 @app.route('/get_internship_data')
 def get_data():
 
-
-
-    data = {'labels': ['Label1', 'Label2', 'Label3'],
-            'values': [11, 20, 30]}
+    internships = get_all_internships()
+    years= {}
+    for internship in internships:
+        if internship.status == 'completed':
+            if internship.year not in years:
+                years[f'{internship.year}']=1
+            elif internship.year in years:
+                    years[f'{internship.year}']+=1
+    
+    print(years)
+    data = {'labels': list(years.keys()),
+            'values': list(years.values())}
     return jsonify(data)
 
 
@@ -251,7 +260,7 @@ def upload_file(internship_id):
             return "No selected file"
 
         if file:
-            base_directory = f"students/{session.get('prn')}"
+            base_directory = f"static/students/{session.get('prn')}"
 
             offer_letter_folder_path = os.path.join(base_directory, 'offer_letter')
             if not os.path.exists(offer_letter_folder_path):
@@ -277,7 +286,7 @@ def upload_certificate(internship_id):
             return "No selected file"
 
         if file:
-            base_directory = f"students/{session.get('prn')}"
+            base_directory = f"static/students/{session.get('prn')}"
 
             completion_certificate_folder_path = os.path.join(base_directory, 'completion_certificate')
             if not os.path.exists(completion_certificate_folder_path):
@@ -335,6 +344,7 @@ def feedback_form(internship_id):
         set_internship_feedback(id=id, question_1=q1, question_2=q2, question_3=q3, question_4=q4, question_5=q5,question_6=q6,question_7=q7, question_8=q8)
 
         update_internship_feedback_status(id)
+        set_internship_status(id, 'completed')
         
         return redirect(url_for('dashboard'))
     return render_template('feedbackInput.html', id =id)

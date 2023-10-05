@@ -100,13 +100,14 @@ def view_feedback():
 def reports_view():
     return render_template('reports-view.html')
 
-@app.route('/get_data')
+@app.route('/get_internship_data')
 def get_data():
-    data = {'labels': ['Label1', 'Label2', 'Label3'],
-            'values': [10, 20, 30]}
-    return jsonify(data)
 
-    return jsonify({"labels": labels, "values": values})
+
+
+    data = {'labels': ['Label1', 'Label2', 'Label3'],
+            'values': [11, 20, 30]}
+    return jsonify(data)
 
 
 

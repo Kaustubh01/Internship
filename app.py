@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request, render_template, session
+from flask import Flask, redirect, url_for, request, render_template, session, jsonify
 from datetime import datetime
 import os
 from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report, set_student_username, get_student_using_username, set_student_department
@@ -94,6 +94,23 @@ def view_feedback():
     signature_url = url_for('static', filename=f'students/{internship.prn}/signature/signature.png')
 
     return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report,signature = signature_url)
+
+
+@app.route('/reports-view')
+def reports_view():
+    return render_template('reports-view.html')
+
+@app.route('/get_data')
+def get_data():
+    data = {'labels': ['Label1', 'Label2', 'Label3'],
+            'values': [10, 20, 30]}
+    return jsonify(data)
+
+    return jsonify({"labels": labels, "values": values})
+
+
+
+
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():

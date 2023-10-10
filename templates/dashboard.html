@@ -35,13 +35,13 @@
                         
                         {% if item.has_report %}
                             <p>Report: Submitted</p>
-                        {% else %}
+                        {% elif not item.has_report and item.has_certificate %}
                             <a href="{{ url_for('report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a>
                         {% endif %}
                         
                         {% if item.has_feedback %}
                             <p>Feedback: Submitted</p>
-                        {% else %}
+                        {% elif not item.has_feedback and item.has_report %}
                             <a href="{{ url_for('feedback_form',internship_id = item.internship.internship_id) }}">Submit Internship Feedback</a>
                         {% endif %}
                         {% endif %}

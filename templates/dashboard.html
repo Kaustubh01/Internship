@@ -6,13 +6,13 @@
 <body>
     <h1>Hello {{ student_name }}</h1>
 
-    <form action="{{ url_for('logout') }}" method="get">
+    <form action="{{ url_for('student.logout') }}" method="get">
         <button type="submit">Logout</button>
     </form>
     
     <div id="internships">
         <h3>Your Internships</h3>
-        <form action="{{ url_for('add_new_internship') }}" method="get">
+        <form action="{{ url_for('student.add_new_internship') }}" method="get">
             <button type="submit">Request Internship</button>
         </form>
         <ul>
@@ -23,26 +23,26 @@
                     {% if item.has_offer_letter %}
                         <p>Offer Letter: Submitted</p>
                     {% else %}
-                        <a href="{{ url_for('upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a>
+                        <a href="{{ url_for('student.upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a>
                     {% endif %}
                     {% if item.is_completed %}
                     
                     {% if item.has_certificate %}
                         <p>Certificate: Submitted</p>
                     {% else %}
-                        <a href="{{ url_for('upload_certificate', internship_id = item.internship.internship_id) }}">Submit Completion Certificate</a>
+                        <a href="{{ url_for('student.upload_certificate', internship_id = item.internship.internship_id) }}">Submit Completion Certificate</a>
                     {% endif %}
                         
                         {% if item.has_report %}
                             <p>Report: Submitted</p>
                         {% elif not item.has_report and item.has_certificate %}
-                            <a href="{{ url_for('report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a>
+                            <a href="{{ url_for('student.report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a>
                         {% endif %}
                         
                         {% if item.has_feedback %}
                             <p>Feedback: Submitted</p>
                         {% elif not item.has_feedback and item.has_report %}
-                            <a href="{{ url_for('feedback_form',internship_id = item.internship.internship_id) }}">Submit Internship Feedback</a>
+                            <a href="{{ url_for('student.feedback_form',internship_id = item.internship.internship_id) }}">Submit Internship Feedback</a>
                         {% endif %}
                         {% endif %}
                 {% endif %}

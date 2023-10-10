@@ -65,7 +65,7 @@
                 <th>Report</th>
                 <td>
                     {% if has_report %}
-                    <a href="{{ url_for('view_feedback') }}">View</a>
+                    <a href="{{ url_for('incharge.view_feedback') }}">View</a>
                     {% else %}
                     <p>Not Submitted yet</p>
                     {% endif %}
@@ -75,7 +75,7 @@
                 <th>Feedback</th>
                 <td>
                     {% if has_feedback %}
-                    <a href="{{ url_for('view_feedback') }}">View</a>
+                    <a href="{{ url_for('incharge.view_feedback') }}">View</a>
                     {% else %}
                     <p>Not Submitted yet</p>
                     {% endif %}
@@ -87,10 +87,10 @@
     </div>
 
     {% if not is_acknowledged %}
-    <form method="POST" action="{{ url_for('approve') }}">
+    <form method="POST" action="{{ url_for('incharge.approve') }}">
         <input type="submit" name="action" value="Approve">
     </form>
-    <form method="POST" action="{{ url_for('reject') }}">
+    <form method="POST" action="{{ url_for('incharge.reject') }}">
         <input type="submit" name="action" value="Reject">
     </form>
     {% endif %}

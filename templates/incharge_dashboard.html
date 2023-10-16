@@ -16,7 +16,12 @@
 </head>
 <body>
     <h1>Incharge Dashboard</h1>
-
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
+            <li><a href="{{ url_for('report.report_nav' )}}">Reports</a></li>
+        </ul>
+    </nav>
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">

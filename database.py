@@ -28,6 +28,7 @@ class Internship(db.Model):
     report = db.Column(db.String)
     offer_letter = db.Column(db.String)
     certificate = db.Column(db.String)
+    internship_type = db.Column(db.String)
 
 class Report(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -89,8 +90,8 @@ def check_registration(prn):
     if student.password is not None:
         return True
     
-def add_internship(prn, organization, year, duration, start_date, end_date, work_time, days, std_class):
-    internship = Internship(prn = prn, year = year , organization = organization, duration = duration, start_date = start_date, end_date = end_date, work_time=work_time, days = days, std_class = std_class)
+def add_internship(prn, organization, year, duration, start_date, end_date, work_time, days, std_class, internship_type):
+    internship = Internship(prn = prn, year = year , organization = organization, duration = duration, start_date = start_date, end_date = end_date, work_time=work_time, days = days, std_class = std_class, internship_type = internship_type)
     db.session.add(internship)
     db.session.commit()
 
@@ -161,6 +162,12 @@ def get_feedback(id):
 
 def get_report(id):
     return Report.query.get(id)
+
+# def set_internship_type(id, int_type):
+#     internship = Internship.query.get(id)
+#     if internship:
+#         internship.Internship_type = int_type
+#         db.session.commit()  
 
 def init_app(app):
     db.init_app(app)

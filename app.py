@@ -5,6 +5,7 @@ from database import Student,init_app, add_internship,get_student,  get_internsh
 
 from incharge import incharge_bp
 from student import student_bp
+from report import report_bp
 
 
 
@@ -14,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@lo
 
 app.register_blueprint(incharge_bp)
 app.register_blueprint(student_bp)
+app.register_blueprint(report_bp)
 
 init_app(app)
 @app.route('/', methods=['GET', 'POST'])

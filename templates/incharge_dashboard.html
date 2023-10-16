@@ -18,10 +18,10 @@
     <h1>Incharge Dashboard</h1>
     <nav>
         <ul>
-            <li><a href="{{ url_for('accademic_year_reports_view') }}">Reports</a></li>
+            <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
+            <li><a href="{{ url_for('report.report_nav' )}}">Reports</a></li>
         </ul>
     </nav>
-
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">
@@ -48,7 +48,7 @@
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
             <td>{{ item.internship.status }}</td>
-            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>     
         
         {% endif %}
@@ -79,7 +79,7 @@
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
             <td>{{ item.internship.status }}</td>
-            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -112,7 +112,7 @@
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
             <td>{{ item.internship.status }}</td>
-            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>
         {% endif %}
         {% endfor %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Last 3 Years Report</h3>
+    <div id="bar-chart"></div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/data',
+                dataType: 'json',
+                success: function (data) {
+                    var years = data.years;
+                    var students = data.students;
+                    // var color = data.color;
+
+                    var trace = {
+                        x: years,
+                        y: students,
+                        type: 'bar',
+                        // marker: {color: color}
+                    };
+
+                    var data = [trace];
+
+                    var layout = {
+                        title: 'Company Revenue Bar Chart',
+                        xaxis: {title: 'Years'},
+                        tickvals: [0, 1, 2, 3],
+                        yaxis: {title: 'Students'},
+                    };
+
+                    Plotly.newPlot('bar-chart', data, layout);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

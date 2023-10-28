@@ -8,9 +8,9 @@ report_bp = Blueprint('report',__name__)
 
 @report_bp.route('/data')
 def data():
-    internships = get_all_internships()
-    years = {}
 
+    years = {}
+    internships = get_all_internships()
     for internship in internships:
         if internship.status == 'completed':
             year = internship.year
@@ -34,4 +34,17 @@ def report_nav():
 
 @report_bp.route('/last-three-years')
 def last_three_years():
-    return render_template('last-three-years.html')
+    internships = get_all_internships()
+
+    data = []  # Create an empty dictionary
+    for internship in internships:
+        data.append({
+        'id' : internship.internship_id,
+        'year' : internship.year,
+        'name':get_student_name(internship.prn),
+        'class' :internship.std_class,
+        'organization' : internship.organization
+        })
+    print(data)
+
+    return render_template('last-three-years.html', data = data)

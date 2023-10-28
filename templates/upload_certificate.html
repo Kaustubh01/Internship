@@ -3,13 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Document</title>
+    <Style>
+        .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+}
+form{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;   
+}
+.button{
+        width: 100px;
+        padding: 12px;
+        
+        border: 0px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: medium;
+        background-color: rgb(17, 114, 210);
+        color: aliceblue;
+        border: 0px;
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.button:hover{
+      background-color:rgb(0, 92, 184) ;
+}
+
+    </Style>
 </head>
 <body>
-    <form action="{{ url_for('upload_certificate',internship_id = id) }}" enctype="multipart/form-data" method="post" >
-        <label for="file">Completion Certificate</label>
-        <input type="file"  name="file" accept=".pdf, .doc, .docx">
-        <input type="submit" value="Submit">
+
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+
+    <form action="{{ url_for('student.upload_certificate',internship_id = id) }}" enctype="multipart/form-data" method="post" >
+        <div>
+        <label for="file" style="font-size: 25px;font-weight:600;">Completion Certificate :</label>
+        <input type="file"  name="file" accept=".pdf, .doc, .docx" style="font-size: 15px; margin-left: 20px;">
+        </div>
+        <div>
+        <input type="submit" value="Submit" class="button">
+        </div>
+
     </form>
 </body>
 </html>

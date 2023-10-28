@@ -7,6 +7,8 @@ class Student(db.Model):
     prn = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
     password = db.Column(db.String(255))
+    username = db.Column(db.String(30))
+    department = db.Column(db.String(30))
 
 
 class Internship(db.Model):
@@ -26,6 +28,7 @@ class Internship(db.Model):
     report = db.Column(db.String)
     offer_letter = db.Column(db.String)
     certificate = db.Column(db.String)
+    internship_type = db.Column(db.String)
 
 class Report(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -56,15 +59,27 @@ class Feedback(db.Model):
 def get_student(prn):
     return Student.query.get(prn)
 
-def update_password(password, prn):
+def set_student_username(prn, username):
+    student = Student.query.get(prn)
+    if student:
+        student.username = username
+        db.session.commit()
+
+def set_student_department(prn, department):
+    student = Student.query.get(prn)
+    if student:
+        student.department = department
+        db.session.commit()
+
+def update_password(password, prn): 
     student = Student.query.get(prn)
     if student:
         student.password = password
         db.session.commit()
         print('password updated')
 
-def authenticate_student(prn, password):
-    student = Student.query.get(prn)
+def authenticate_student(username, password):
+    student = Student.query.get(username)
     if student.password == password:
         print('student is registered')
         return True
@@ -75,8 +90,8 @@ def check_registration(prn):
     if student.password is not None:
         return True
     
-def add_internship(prn, organization, year, duration, start_date, end_date, work_time, days, std_class):
-    internship = Internship(prn = prn, year = year , organization = organization, duration = duration, start_date = start_date, end_date = end_date, work_time=work_time, days = days, std_class = std_class)
+def add_internship(prn, organization, year, duration, start_date, end_date, work_time, days, std_class, internship_type):
+    internship = Internship(prn = prn, year = year , organization = organization, duration = duration, start_date = start_date, end_date = end_date, work_time=work_time, days = days, std_class = std_class, internship_type = internship_type)
     db.session.add(internship)
     db.session.commit()
 
@@ -89,6 +104,10 @@ def get_all_internships():
 def get_student_name(prn):
     student = Student.query.get(prn)
     return student.name
+
+def get_student_using_username(username):
+    student = db.session.query(Student).filter_by(username = username).first()
+    return student
 
 def set_internship_status(id, updated_status):
     internship = Internship.query.get(id)
@@ -143,6 +162,12 @@ def get_feedback(id):
 
 def get_report(id):
     return Report.query.get(id)
+
+# def set_internship_type(id, int_type):
+#     internship = Internship.query.get(id)
+#     if internship:
+#         internship.Internship_type = int_type
+#         db.session.commit()  
 
 def init_app(app):
     db.init_app(app)

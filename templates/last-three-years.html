@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Yearly Report</h3>
+    <div id="bar-chart"></div>
+    <table>
+        <thead>
+        <tr>
+        <th>Accademic Year</th>
+        <th>Name Of Student</th>
+        <th>Class</th>
+        <th>Organization</th>
+    </tr>
+</thead>
+<tbody>
+    {% for item in data %}
+        <tr>
+        <td>{{ item.year }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.class }}</td>
+        <td>{{ item.organization }}</td>
+        <td><a href="{{ url_for('incharge.view_internship', internship_id = item.id) }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/data',
+                dataType: 'json',
+                success: function (data) {
+                    var years = data.years;
+                    var students = data.students;
+                    // var color = data.color;
+
+                    var trace = {
+                        x: years,
+                        y: students,
+                        type: 'bar',
+                        // marker: {color: color}
+                    };
+
+                    var data = [trace];
+
+                    var layout = {
+                        title: 'Last Three Years Internship Report',
+                        xaxis: {title: 'Years'},
+                        tickvals: [0, 1, 2, 3],
+                        yaxis: {title: 'Students'},
+                    };
+
+                    Plotly.newPlot('bar-chart', data, layout);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

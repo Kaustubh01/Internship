@@ -4,19 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        table{
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td{
-            border: 1px solid black;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'incharge_dashboard.css') }}">
 </head>
 <body>
     <h1>Incharge Dashboard</h1>
+    <nav>
+        <ul class="menu">
+            <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
+            <li class="reports-nav">
+                <a href="{{ url_for('report.report_nav' )}}" >Reports</a>
+                <ul class="sub-menu-1">
+                    <li>
+                        <a href="{{ url_for('report.last_three_years') }}">Accademic Year</a>
+                    </li>
+                    <li>
+                       <a href="">Last Three Years</a>
+                    </li>
+                    <li >
+                         <a href="" class="internship-types-nav">Internship Types</a>
+                        <ul class="sub-menu-2">
+                            <li>In-House</li>
+                            <li>Out-House</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="summary-nav">Summary</a> 
+                        <ul class="sub-menu-3">
+                            <li>Yearly</li>
+                            <li>Student</li>
+                            <li>Company</li>
+                        </ul>
 
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </nav>
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">
@@ -43,7 +67,7 @@
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
             <td>{{ item.internship.status }}</td>
-            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>     
         
         {% endif %}
@@ -74,7 +98,40 @@
             <td>{{ item.internship.days }}</td>
             <td>{{ item.internship.work_time }}</td>
             <td>{{ item.internship.status }}</td>
-            <td><a href="{{ url_for('view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+
+    <h3>Completed Internships</h3>
+    <table id="acknowledged-internships-table">
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Internship Organization</th>
+            <th>Start and End Dates</th>
+            <th>Working Days</th>
+            <th>Working Hours</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        
+        {% for item in data %}
+        {% if item.is_completed %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.internship.std_class }}</td>
+            <td>{{ item.internship.organization }}</td>
+            <td>{{ item.internship.start_date }} to {{ item.internship.end_date }}</td>
+            <td>{{ item.internship.days }}</td>
+            <td>{{ item.internship.work_time }}</td>
+            <td>{{ item.internship.status }}</td>
+            <td><a href="{{ url_for('incharge.view_internship', internship_id = item.internship.internship_id) }}">view</a></td>
         </tr>
         {% endif %}
         {% endfor %}

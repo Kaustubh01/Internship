@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo"> -->
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
     <form action="{{ url_for('index') }}" method="post" >
         <button type="submit" name="redirect_button" value="login" class="indexbuttons">Already Have an account</button>
         <button type="submit" name="redirect_button" value="register" class="indexbuttons">Create New Account</button>

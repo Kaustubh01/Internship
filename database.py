@@ -7,6 +7,7 @@ class Student(db.Model):
     prn = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30))
     password = db.Column(db.String(255))
+    username = db.Column(db.String(30))
 
 
 class Internship(db.Model):
@@ -56,15 +57,21 @@ class Feedback(db.Model):
 def get_student(prn):
     return Student.query.get(prn)
 
-def update_password(password, prn):
+def set_student_username(prn, username):
+    student = Student.query.get(prn)
+    if student:
+        student.username = username
+        db.session.commit()
+
+def update_password(password, prn): 
     student = Student.query.get(prn)
     if student:
         student.password = password
         db.session.commit()
         print('password updated')
 
-def authenticate_student(prn, password):
-    student = Student.query.get(prn)
+def authenticate_student(username, password):
+    student = Student.query.get(username)
     if student.password == password:
         print('student is registered')
         return True
@@ -89,6 +96,10 @@ def get_all_internships():
 def get_student_name(prn):
     student = Student.query.get(prn)
     return student.name
+
+def get_student_using_username(username):
+    student = db.session.query(Student).filter_by(username = username).first()
+    return student
 
 def set_internship_status(id, updated_status):
     internship = Internship.query.get(id)

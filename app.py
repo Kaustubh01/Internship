@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report, set_student_username, get_student_using_username
 
 
 
@@ -122,8 +122,11 @@ def register():
 @app.route('/login', methods=['POST','GET'])
 def login():
     if request.method == 'POST':
+        username = request.form.get('username')
         password = request.form.get('password')
-        prn = request.form.get('prn')
+        
+        print(username)
+        prn = get_student_using_username(username).prn
         session['prn'] = prn
         session['student']= get_student(prn).name
         if authenticate_student(prn, password):
@@ -158,6 +161,7 @@ def set_password():
         password = request.form.get('password')
         username = request.form.get('username')
         update_password(password, session.get('prn'))
+        set_student_username(session.get('prn'), username)
 
         return redirect(url_for('dashboard'))
     return render_template('set_password.html',name = session.get('student'))

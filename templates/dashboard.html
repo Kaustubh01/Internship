@@ -10,7 +10,7 @@
     <h1>Hello {{ student_name }}</h1>
 
 
-    <form action="{{ url_for('logout') }}" method="get">
+    <form action="{{ url_for('student.logout') }}" method="get">
         <button type="submit" class="button">Logout</button>
 
     </form>
@@ -20,7 +20,7 @@
 
         <div class="request">
         <h2>Your Internships : </h2>
-        <form action="{{ url_for('add_new_internship') }}" method="get">
+        <form action="{{ url_for('student.add_new_internship') }}" method="get">
             <button type="submit"  class="button">Request Internship</button>
 
         </form>

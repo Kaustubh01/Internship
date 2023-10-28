@@ -11,6 +11,12 @@
             margin: 0;
             padding: 0;
         }
+        .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+}
 
         h1 {
             text-align: center;
@@ -60,16 +66,17 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
     </style>
 </head>
-<>
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
     <h1>Internship Request Form</h1>
     <div class="form-container">
         <form action="{{ url_for('student.add_new_internship') }}" id="date-form" method="post">
-            <label for="academic_year">Academic Year:</label>
+            <label for="academic_year">Academic Year: </label>
             <input type="text" name="academic_year" id="academic_year" required placeholder="YYYY-YYYY"
             
-            <label for="class">Class:</label>
+            <label for="class">Class: </label>
             <select id="class" name="class">
                 <option value="FE">FE</option>
                 <option value="SE">SE</option>
@@ -77,7 +84,7 @@
                 <option value="BE">BE</option>
               </select>
         
-            <label for="organization_name">Name Of Organization:</label>
+            <label for="organization_name">Name Of Organization: </label>
             <select name="organization_list" id="organization_list">
                 <option value="" selected disabled>_</option>
                 {% for org in organizations %}

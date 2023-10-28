@@ -17,9 +17,9 @@ form{
     padding: 10px;
     border-radius: 10px;
     font-weight:bold;
-    font-size: large;
+    font-size: 20px;
     background-color: rgb(17, 114, 210);
-    color: aliceblue;
+    color: rgb(250, 250, 250);
     border: 0px;
     cursor: pointer;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);     

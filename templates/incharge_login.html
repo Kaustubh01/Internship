@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='incharge_login.css') }}">
     <title>Document</title>
 </head>
 <body>
-    <h1>Login as Incharge</h1>
     <form action="{{ url_for('incharge_login') }}" method="post">
-        <input type="submit" value="Login">
+        <h1>Login as Incharge</h1>
+        <input type="submit" value="Login" class="button">
     </form>
 </body>
 </html>

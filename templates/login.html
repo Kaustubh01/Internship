@@ -8,22 +8,28 @@
   
   </head>
   <body>
+    <img class="demo-bg" src="../static/images/pexels-pixabay-159618.jpg" alt="" />
+    
+    <div class="demo-content">
     <div class="content">
       <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+      
       <form action="{{ url_for('login') }}" method="post">
-        <h1>Login</h1>
+         
+        <h1 style="color: rgb(123, 136, 148); font-family:Georgia, 'Times New Roman', Times, serif;">Login</h1>
         <div class="fillups" id="fillup1">
-          <label for="">Username: </label>
-          <input type="text" name="username" class="inputs" />
+          
+          <input type="text" name="username" class="inputs" placeholder="Username"/>
         </div>
         <br />
         <div class="fillups">
-          <label for="">Password</label>
-          <input type="password" name="password" class="inputs" />
+          
+          <input type="password" name="password" class="inputs" placeholder="Password"/>
         </div>
         <br />
         <input type="submit" value="Login" class="button" />
       </form>
+    </div>
     </div>
   </body>
 </html>

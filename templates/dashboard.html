@@ -1,56 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Dashboard</title>
-</head>
-<body>
+  </head>
+
+  <body>
     <h1>Hello {{ student_name }}</h1>
-
+    <ul id="notifications">
+      Notification
+    </ul>
     <form action="{{ url_for('student.logout') }}" method="get">
-        <button type="submit">Logout</button>
+      <button type="submit">Logout</button>
     </form>
-    
-    <div id="internships">
-        <h3>Your Internships</h3>
-        <form action="{{ url_for('student.add_new_internship') }}" method="get">
-            <button type="submit">Request Internship</button>
-        </form>
-        <ul>
-            {% for item in data %}
-                <li> 
-                    <p > {{ item.internship.organization }}  status: {{ item.internship.status }}</p> 
-                {% if item.status %}
-                    {% if item.has_offer_letter %}
-                        <p>Offer Letter: Submitted</p>
-                    {% else %}
-                        <a href="{{ url_for('student.upload_file',internship_id = item.internship.internship_id) }}">Upload offer letter</a>
-                    {% endif %}
-                    {% if item.is_completed %}
-                    
-                    {% if item.has_certificate %}
-                        <p>Certificate: Submitted</p>
-                    {% else %}
-                        <a href="{{ url_for('student.upload_certificate', internship_id = item.internship.internship_id) }}">Submit Completion Certificate</a>
-                    {% endif %}
-                        
-                        {% if item.has_report %}
-                            <p>Report: Submitted</p>
-                        {% elif not item.has_report and item.has_certificate %}
-                            <a href="{{ url_for('student.report_form', internship_id = item.internship.internship_id) }}">Submit Internship Report</a>
-                        {% endif %}
-                        
-                        {% if item.has_feedback %}
-                            <p>Feedback: Submitted</p>
-                        {% elif not item.has_feedback and item.has_report %}
-                            <a href="{{ url_for('student.feedback_form',internship_id = item.internship.internship_id) }}">Submit Internship Feedback</a>
-                        {% endif %}
-                        {% endif %}
-                {% endif %}
-                
-                </li><br>
-            {% endfor %}
 
-        </ul>
+    <div id="internships">
+      <h3>Your Internships</h3>
+      <form action="{{ url_for('student.add_new_internship') }}" method="get">
+        <button type="submit">Request Internship</button>
+      </form>
+      <ul>
+        {% for item in data %}
+        <li>
+          <p>
+            {{ item.internship.organization }} status: {{ item.internship.status
+            }}
+          </p>
+          {% if item.status %} {% if item.has_offer_letter %}
+          <p>Offer Letter: Submitted</p>
+          {% else %}
+          <a
+            href="{{ url_for('student.upload_file',internship_id = item.internship.internship_id) }}"
+            >Upload offer letter</a
+          >
+          {% endif %} {% if item.is_completed %} {% if item.has_certificate %}
+          <p>Certificate: Submitted</p>
+          {% else %}
+          <a
+            href="{{ url_for('student.upload_certificate', internship_id = item.internship.internship_id) }}"
+            >Submit Completion Certificate</a
+          >
+          {% endif %} {% if item.has_report %}
+          <p>Report: Submitted</p>
+          {% elif not item.has_report and item.has_certificate %}
+          <a
+            href="{{ url_for('student.report_form', internship_id = item.internship.internship_id) }}"
+            >Submit Internship Report</a
+          >
+          {% endif %} {% if item.has_feedback %}
+          <p>Feedback: Submitted</p>
+          {% elif not item.has_feedback and item.has_report %}
+          <a
+            href="{{ url_for('student.feedback_form',internship_id = item.internship.internship_id) }}"
+            >Submit Internship Feedback</a
+          >
+          {% endif %} {% endif %} {% endif %}
+        </li>
+        <br />
+        {% endfor %}
+      </ul>
     </div>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+
+    <script>
+      var socket = io.connect(
+        "http://" + document.domain + ":" + location.port
+      );
+
+      socket.on("connect", function () {
+        // Join a room to receive personalized notifications
+        console.log("connected");
+        var student_name = "Omkar"; // Replace with the actual student's name
+        socket.emit("join", { room: "student_" + student_name });
+      });
+
+      socket.on("notification", function (data) {
+        console.log("notification")
+        console.log(data.message);
+        // Display the notification to the student
+        var notifications = document.getElementById("notifications");
+        var li = document.createElement("li");
+        li.innerHTML = data.message;
+        notifications.appendChild(li);
+      });
+    </script>
+  </body>
 </html>

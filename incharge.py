@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, url_for, redirect, session, request
+from flask_socketio import  emit         
 from database import *
 
 incharge_bp = Blueprint('incharge', __name__)
+socketio = None
 
 @incharge_bp.route('/incharge_dashboard', methods = ['GET', 'POST'])
 def incharge_dashboard():
@@ -40,13 +42,21 @@ def view_internship(internship_id):
 @incharge_bp.route('/approve', methods = ['POST'])
 def approve():
     if request.method == 'POST' and request.form['action'] == 'Approve':
-        set_internship_status(session.get('internship_id'), 'Approved')
+        internship_id = session.get('internship_id')
+        set_internship_status(internship_id, 'Approved')
+        #notificationToStudent
+        if socketio is not None:
+            socketio.emit('notification', {'message': f'Your internship request (ID: {internship_id}) has been approved.'}, room=f'student_{internship_id}')
     return redirect(url_for('incharge.incharge_dashboard'))
 
 @incharge_bp.route('/reject', methods = ['POST'])
 def reject():
     if request.method == 'POST' and request.form['action'] == 'Reject':
-        set_internship_status(session.get('internship_id'), 'Rejected')
+        internship_id = session.get('internship_id')
+        set_internship_status(internship_id, 'Rejected')
+        #notificationToStudent
+        if socketio is not None:
+            socketio.emit('notification',{'message':f'Your internship request (ID:  {internship_id}) has been rejected.'}, room=f'student_{internship_id}')
     return redirect(url_for('incharge.incharge_dashboard'))
 
 @incharge_bp.route('/view_report')

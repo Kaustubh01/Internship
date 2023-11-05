@@ -12,7 +12,7 @@ form {
     width: 300px;
     padding: 40px;
     border-radius: 10px;
-   
+    background-color:rgb(255, 255, 255);
     
 
 
@@ -28,6 +28,8 @@ form {
 
 .demo-content {
     position: relative;
+    
+    
 }
 .logo {
     display: block;
@@ -58,10 +60,10 @@ form {
     padding: 10px;
     background-color: transparent;
     border: 0px;
-    border-radius: 10px;
+    
     cursor: pointer;
-    color: aliceblue;
-    border-bottom: 2px solid gray;
+    color: rgb(0, 0, 0);
+    border-bottom: 2px solid rgb(0, 0, 0);
         border-radius: 0%;
         outline: none;
         text-align: center;
@@ -71,20 +73,23 @@ form {
     margin-top: 30px;
     width: 150px;
     padding: 10px;
-    border: 0px;
+    
     border-radius: 10px;
     font-weight: bold;
     font-size: large;
-    background-color: rgb(123, 136, 148);
+    background-color: rgb(0, 0, 0);
     color: aliceblue;
-    border: 0px;
+    border: 3px solid black;
+ 
     cursor: pointer;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .button:hover {
-    background-color: gray;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border: 3px solid black;
 }
 
 label {

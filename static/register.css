@@ -24,6 +24,9 @@ form{
             0 6px 20px 0 rgba(0, 0, 0, 0.19);
             padding: 40px;
                 border-radius: 10px;
+        background-color: white;
+        width: 400px;
+        height: 300px;
 }
 .demo-bg {
     opacity: 0.6;
@@ -47,7 +50,7 @@ form{
     border: 0px;
     border-radius: 10px;
     cursor: pointer;
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid rgb(0, 0, 0);
     border-radius: 0%;
     outline: none;
     
@@ -60,18 +63,20 @@ form{
     margin-top: 50px;
     width: 150px;
     padding: 10px;
-    border: 0px;
+    
     border-radius: 10px;
     font-weight: bold;
     font-size: large;
-    background-color: rgb(123, 136, 148);
-    color: aliceblue;
-    border: 0px;
+    background-color: rgb(0, 0, 0);
+        color: aliceblue;
+        border: 3px solid black;
     cursor: pointer;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .button:hover {
-    background-color: gray;
+    background-color: rgb(255, 255, 255);
+        color: black;
+        border: 3px solid black;
 }

@@ -1,9 +1,12 @@
 from flask import Blueprint, render_template, url_for, redirect, session, request
-from flask_socketio import  emit         
+from flask_mail import Message
+from email_utils import mail
 from database import *
 
 incharge_bp = Blueprint('incharge', __name__)
-socketio = None
+
+sendd = "skillhivedumy@gmail.com"
+user= "omkarlande.534@gmail.com"
 
 @incharge_bp.route('/incharge_dashboard', methods = ['GET', 'POST'])
 def incharge_dashboard():
@@ -44,9 +47,16 @@ def approve():
     if request.method == 'POST' and request.form['action'] == 'Approve':
         internship_id = session.get('internship_id')
         set_internship_status(internship_id, 'Approved')
+        email = request.form.get('email')
         #notificationToStudent
-        if socketio is not None:
-            socketio.emit('notification', {'message': f'Your internship request (ID: {internship_id}) has been approved.'}, room=f'student_{internship_id}')
+        #if socketio is not None:
+        #    socketio.emit('notification', {'message': f'Your internship request (ID: {internship_id}) has been approved.'}, room=f'student_{internship_id}')
+    
+        #SendEmail
+        msg = Message('Internship Approval', sender=user, recipients=[sendd])
+        msg.body = f'Your internship request (ID: {internship_id}) has been approved.'
+        mail.send(msg)
+    
     return redirect(url_for('incharge.incharge_dashboard'))
 
 @incharge_bp.route('/reject', methods = ['POST'])
@@ -55,8 +65,14 @@ def reject():
         internship_id = session.get('internship_id')
         set_internship_status(internship_id, 'Rejected')
         #notificationToStudent
-        if socketio is not None:
-            socketio.emit('notification',{'message':f'Your internship request (ID:  {internship_id}) has been rejected.'}, room=f'student_{internship_id}')
+        #if socketio is not None:
+        #    socketio.emit('notification',{'message':f'Your internship request (ID:  {internship_id}) has been rejected.'}, room=f'student_{internship_id}')
+
+        #SendEmail
+        msg = Message('Internship Rejected', sender=user, recipients=[sendd])
+        msg.body = f'Your internship request (ID: {internship_id}) has been rejected.'
+        mail.send(msg)
+
     return redirect(url_for('incharge.incharge_dashboard'))
 
 @incharge_bp.route('/view_report')

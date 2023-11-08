@@ -34,7 +34,7 @@
                         <p>Offer Letter: Submitted</p>
                     {% else %}
 
-                        <a href="{{ url_for('upload_file',internship_id = item.internship.internship_id) }}">• Upload offer letter →</a>
+                        <a href="{{ url_for('student.upload_file',internship_id = item.internship.internship_id) }}">• Upload offer letter →</a>
 
                     {% endif %}
                     {% if item.is_completed %}
@@ -43,7 +43,7 @@
                         <p>Certificate: Submitted</p>
                     {% else %}
 
-                        <a href="{{ url_for('upload_certificate', internship_id = item.internship.internship_id) }}">• Submit Completion Certificate →</a>
+                        <a href="{{ url_for('student.upload_certificate', internship_id = item.internship.internship_id) }}">• Submit Completion Certificate →</a>
 
                     {% endif %}
                         
@@ -51,7 +51,7 @@
                             <p>Report: Submitted</p>
 
                         {% else %}
-                            <a href="{{ url_for('report_form', internship_id = item.internship.internship_id) }}">• Submit Internship Report →</a>
+                            <a href="{{ url_for('student.report_form', internship_id = item.internship.internship_id) }}">• Submit Internship Report →</a>
 
                         {% endif %}
                         
@@ -59,7 +59,7 @@
                             <p>Feedback: Submitted</p>
 
                         {% else %}
-                            <a href="{{ url_for('feedback_form',internship_id = item.internship.internship_id) }}">• Submit Internship Feedback →</a>
+                            <a href="{{ url_for('student.feedback_form',internship_id = item.internship.internship_id) }}">• Submit Internship Feedback →</a>
 
                         {% endif %}
                         {% endif %}

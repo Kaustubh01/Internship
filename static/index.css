@@ -10,8 +10,14 @@ form{
     display: block;
         margin-left: auto;
         margin-right: auto;
+<<<<<<< HEAD
+        width: 500px;
+        
+}  */
+=======
         width: 700px;    
 } 
+>>>>>>> a8025f1fa725b416443279fd0de8efe33a5bf2ff
 .indexbuttons{
     width: 250px;
     padding: 10px;

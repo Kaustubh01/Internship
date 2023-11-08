@@ -8,13 +8,26 @@
   
   </head>
   <body style="margin: 0%;">
-    <img class="demo-bg" src="../static/images/cool-background.png" alt="" />
+    <img class="demo-bg" src="" alt="" />
     
     <div class="demo-content">
+
+    
     <div class="content">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
       
-      <form action="{{ url_for('login') }}" method="post">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+        <form action="{{ url_for('index') }}" method="post" class="threebuttons">
+          <button type="submit" name="redirect_button" value="login" class="indexbuttons" style="font-size: 19px">
+            Already Have an account
+          </button>
+          <button type="submit" name="redirect_button" value="register" class="indexbuttons">
+            Create New Account
+          </button>
+          <button type="submit" name="redirect_button" value="login_incharge" class="indexbuttons">
+            Login as Incharge
+          </button>
+        </form>
+      <form action="{{ url_for('login') }}" method="post" class="loginform">
          
         <h1 style="color: rgb(0, 0, 0); font-family:Georgia, 'Times New Roman', Times, serif;">Login</h1>
         <div class="fillups" id="fillup1">

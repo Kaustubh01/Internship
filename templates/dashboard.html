@@ -73,52 +73,7 @@
                 </li><br>
             {% endfor %}
 
-    <div id="internships">
-      <h3>Your Internships</h3>
-      <form action="{{ url_for('student.add_new_internship') }}" method="get">
-        <button type="submit">Request Internship</button>
-      </form>
-      <ul>
-        {% for item in data %}
-        <li>
-          <p>
-            {{ item.internship.organization }} status: {{ item.internship.status
-            }}
-          </p>
-          {% if item.status %} {% if item.has_offer_letter %}
-          <p>Offer Letter: Submitted</p>
-          {% else %}
-          <a
-            href="{{ url_for('student.upload_file',internship_id = item.internship.internship_id) }}"
-            >Upload offer letter</a
-          >
-          {% endif %} {% if item.is_completed %} {% if item.has_certificate %}
-          <p>Certificate: Submitted</p>
-          {% else %}
-          <a
-            href="{{ url_for('student.upload_certificate', internship_id = item.internship.internship_id) }}"
-            >Submit Completion Certificate</a
-          >
-          {% endif %} {% if item.has_report %}
-          <p>Report: Submitted</p>
-          {% elif not item.has_report and item.has_certificate %}
-          <a
-            href="{{ url_for('student.report_form', internship_id = item.internship.internship_id) }}"
-            >Submit Internship Report</a
-          >
-          {% endif %} {% if item.has_feedback %}
-          <p>Feedback: Submitted</p>
-          {% elif not item.has_feedback and item.has_report %}
-          <a
-            href="{{ url_for('student.feedback_form',internship_id = item.internship.internship_id) }}"
-            >Submit Internship Feedback</a
-          >
-          {% endif %} {% endif %} {% endif %}
-        </li>
-        <br />
-        {% endfor %}
-      </ul>
-    </div>
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 
     <script>

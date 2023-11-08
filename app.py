@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session, jsonify
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report, set_student_username, get_student_using_username, set_student_department
+from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report, set_student_username, get_student_using_username, set_student_department, set_student_email
 
 from incharge import incharge_bp
 from student import student_bp
@@ -11,7 +11,7 @@ from report import report_bp
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:ogom534@localhost/internship'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/internship'
 
 app.register_blueprint(incharge_bp)
 app.register_blueprint(student_bp)
@@ -37,10 +37,6 @@ def incharge_login():
         return redirect(url_for('incharge.incharge_dashboard'))
 
     return render_template('incharge_login.html')
-
-
-
-
 
 
 @app.route('/register', methods = ['GET', 'POST'])
@@ -108,10 +104,12 @@ def set_password():
         password = request.form.get('password')
         username = request.form.get('username')
         department = request.form.get('department')
+        email = request.form.get('email')
 
         update_password(password, session.get('prn'))
         set_student_username(session.get('prn'), username)
         set_student_department(session.get('prn'), department)
+        set_student_email(session.get('prn'), email)
 
         return redirect(url_for('student.dashboard'))
     return render_template('set_password.html',name = session.get('student'))

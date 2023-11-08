@@ -7,11 +7,19 @@ from incharge import incharge_bp
 from student import student_bp
 from report import report_bp
 
-
-
 app = Flask(__name__)
+#socketio = SocketIO(app)
 app.secret_key = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/internship'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:ogom534@localhost/internship'
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'skillhivedumy@gmail.com'
+app.config['MAIL_PASSWORD'] = 'fwgrugbsykerdtaw'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+
+mail.init_app(app)
 
 app.register_blueprint(incharge_bp)
 app.register_blueprint(student_bp)
@@ -30,14 +38,12 @@ def index():
         return redirect(url_for('incharge_login'))
     return render_template('index.html')
    
-
 @app.route('/incharge_login', methods=['GET','POST'])
 def incharge_login():
     if request.method == 'POST':
         return redirect(url_for('incharge.incharge_dashboard'))
 
     return render_template('incharge_login.html')
-
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -78,7 +84,6 @@ def login():
             return 'Invalid Credentials'
     return render_template('login.html')
 
-
 @app.route('/set_password',methods = ['POST','GET'])
 def set_password():
     
@@ -114,10 +119,6 @@ def set_password():
         return redirect(url_for('student.dashboard'))
     return render_template('set_password.html',name = session.get('student'))
 
-
-
-
-
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug=True)
     

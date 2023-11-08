@@ -170,6 +170,11 @@ def get_feedback(id):
 def get_report(id):
     return Report.query.get(id)
 
+def get_student_using_internship_id(id):
+    internship = Internship.query.get(id)
+    prn = internship.prn
+    return Student.query.get(prn)
+
 # def set_internship_type(id, int_type):
 #     internship = Internship.query.get(id)
 #     if internship:

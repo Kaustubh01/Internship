@@ -45,7 +45,7 @@
                 <th>Offer Letter</th>
                 <td>
                     {% if has_offer_letter %}
-                    <a href="">View</a>
+                    <a href="{{ url_for('incharge.view_offer_letter') }}">View</a>
                     {% else %}
                     <p>Not Submitted yet</p>
                     {% endif %}
@@ -55,7 +55,7 @@
                 <th>Completion Certificate</th>
                 <td>
                     {% if has_certificate %}
-                    <a href="">View</a>
+                    <a href="{{ url_for('incharge.view_certificate') }}">View</a>
                     {% else %}
                     <p>Not Submitted yet</p>
                     {% endif %}

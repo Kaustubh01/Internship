@@ -27,6 +27,7 @@ def view_internship(internship_id):
     student = get_student(internship.prn)
 
     session['internship_id'] = id
+    session['internship_prn'] = internship.prn
 
     is_acknowledged = internship.status == 'Approved' or internship.status == 'Rejected' or internship.status == 'completed' 
     has_offer_letter = internship.offer_letter == 'submitted'
@@ -68,4 +69,12 @@ def view_feedback():
 
     return render_template('feedback_view.html', feedback = feedback, internship = internship, student = student, report = report,signature = signature_url)
 
+@incharge_bp.route('/view_certificate')
+def view_certificate():
+    file = f"students/{session.get('internship_prn')}/completion_certificate/{session.get('internship_id')}.pdf"
+    return render_template('pdf.html',file = file, title = 'Completion Certificate')
 
+@incharge_bp.route('/view_offer_letter')
+def view_offer_letter():
+    file = f"students/{session.get('internship_prn')}/offer_letter/{session.get('internship_id')}.pdf"
+    return render_template('pdf.html',file = file , title = 'Offer Letter')

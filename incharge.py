@@ -5,8 +5,7 @@ from database import *
 
 incharge_bp = Blueprint('incharge', __name__)
 
-sendd = "skillhivedumy@gmail.com"
-user= "omkarlande.534@gmail.com"
+user = "skillhivedumy@gmail.com"
 
 @incharge_bp.route('/incharge_dashboard', methods = ['GET', 'POST'])
 def incharge_dashboard():
@@ -52,9 +51,10 @@ def approve():
         #notificationToStudent
         #if socketio is not None:
         #    socketio.emit('notification', {'message': f'Your internship request (ID: {internship_id}) has been approved.'}, room=f'student_{internship_id}')
-    
+        print(get_student_using_internship_id(id=internship_id).email)
+
         #SendEmail
-        msg = Message('Internship Approval', sender=user, recipients=[sendd])
+        msg = Message('Internship Approval', sender=user, recipients=[get_student_using_internship_id(id=internship_id).email])
         msg.body = f'Your internship request (ID: {internship_id}) has been approved.'
         mail.send(msg)
     
@@ -70,7 +70,7 @@ def reject():
         #    socketio.emit('notification',{'message':f'Your internship request (ID:  {internship_id}) has been rejected.'}, room=f'student_{internship_id}')
 
         #SendEmail
-        msg = Message('Internship Rejected', sender=user, recipients=[sendd])
+        msg = Message('Internship Rejected', sender=user, recipients=[get_student_using_internship_id(id=internship_id).email])
         msg.body = f'Your internship request (ID: {internship_id}) has been rejected.'
         mail.send(msg)
 

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename = 'incharge_dashboard.css') }}">
 </head>
 <body>
-    <h1>Incharge Dashboard</h1>
     <nav>
         <ul class="menu">
             <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
@@ -41,6 +40,8 @@
             </li>
         </ul>
     </nav>
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+    <h1>Incharge Dashboard</h1>
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">

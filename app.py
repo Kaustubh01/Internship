@@ -11,7 +11,7 @@ from report import report_bp
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:ogom534@localhost/internship'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/internship'
 
 app.register_blueprint(incharge_bp)
 app.register_blueprint(student_bp)

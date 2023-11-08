@@ -1,17 +1,38 @@
+body{
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('./images/background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+h1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 ul li{
     list-style: none;
     padding: 20px 10px;
-    background-color: yellow;
 }
 ul li a{
     text-decoration: none;
-    color: black;
+    color: #ffffff;
 }
 .menu{
     display: flex;
-    flex-direction: row;
+    position: relative;
+    justify-content: flex-end;
+    align-items: center;
+    height: 8vh;
+    background: rgba(29, 140, 231, 0.5);
+    margin-top: 10px;
+    margin-right: 12px;
+    margin-left: 12px;
 }
-
 
 .menu .sub-menu-1{
     display: none;
@@ -34,6 +55,14 @@ ul li a{
 }
 .summary-nav:hover .sub-menu-3{
     display: flex;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+    padding-top: 50px;
 }
 
 table{

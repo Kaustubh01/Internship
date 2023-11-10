@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='reportInput.css') }}">
     <title>Internship Information</title>
+    <Style>
+                .logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+}
+    </Style>
 </head>
 <body>
+    <img class="demo-bg" src="../static/images/pexels-pixabay-159618.jpg" alt="" />
+    
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
 
     <p class="title">DEPARTMENT OF INFORMATION TECHNOLOGY</p>
 
@@ -48,7 +59,7 @@
         <label for="learnings">Key Learnings from the Internship:</label>
         <textarea id="learnings" name="learnings" rows="4" cols="50" required></textarea><br>
 
-        <input type="submit" value="report-input">
+        <input type="submit" value="report-input" >
     </form>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internship Modal</title>
@@ -10,115 +11,201 @@
             background-color: #f5f5f5;
             margin: 0;
             padding: 0;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1000px;
+            z-index: 1;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #000000;
             padding: 20px;
             margin-bottom: 20px;
         }
 
         .form-container {
-            width: 60%;
+            width: 70%;
             margin: 0 auto;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+
         }
 
         label {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
+            color: rgb(0, 0, 0);
         }
+
 
         input[type="text"],
         input[type="date"],
-        select {
+        input[type="number"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            background-color: transparent;
+            border: 0px;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid rgb(0, 0, 0);
+            color: rgb(0, 0, 0);
+        }
+
+        input[type="text"]::placeholder {
+            color: #000000;
+        }
+
+        input[type="number"]::placeholder {
+            color: #000000;
+        }
+
+        select {
+            width: 105%;
+            color: rgb(0, 0, 0);
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: transparent;
+            border: 0px;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid rgb(0, 0, 0);
+        }
+
+        input[type="time"] {
+            color: rgb(0, 0, 0);
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: transparent;
+            border: 0px;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid rgb(0, 0, 0);
         }
 
         input[type="submit"] {
             display: block;
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
+            font-size: 25px;
+            margin-top: 60px;
+            background-color: rgb(0, 0, 0);
+            color: aliceblue;
+            border: 3px solid black;
+            border-radius: 7px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: rgb(255, 255, 255);
+            color: black;
+            border: 3px solid black;
+
+        }
+
+        .demo-bg {
+            opacity: 0.6;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 1600px;
+        }
+
+        .demo-content {
+            position: relative;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+                0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            width: 800px;
+            border-radius: 10px;
+            background-color: white;
+            margin-top: 50px;
         }
     </style>
 </head>
-<>
-    <h1>Internship Request Form</h1>
-    <div class="form-container">
-        <form action="{{ url_for('student.add_new_internship') }}" id="date-form" method="post">
-            <label for="academic_year">Academic Year:</label>
-            <input type="text" name="academic_year" id="academic_year" required placeholder="YYYY-YYYY"
-            
-            <label for="class">Class:</label>
-            <select id="class" name="class">
-                <option value="FE">FE</option>
-                <option value="SE">SE</option>
-                <option value="TE">TE</option>
-                <option value="BE">BE</option>
-              </select>
-        
-            <label for="organization_name">Name Of Organization:</label>
-            <select name="organization_list" id="organization_list">
-                <option value="" selected disabled>_</option>
-                {% for org in organizations %}
-                    <option value="{{ org }}">{{ org }}</option>
-                {% endfor %}
-            </select>
-            <input type="text" name="organization_name" id="organization_name" placeholder="Enter the name of your organization if not present in above list">
 
-            <label for="">Select Internship Type:</label>
-            <select name="internship_type" id="internship_type">
-                <option value="in-house">In-house</option>
-                <option value="Out-house">Out-house</option>
-            </select>
-            
-            <label for="duration">Duration:</label>
-            <input type="number" name="duration" id="duration" required placeholder="in weeks">
-            
-            <label for="start_date">Start Date:</label>
-            <input type="date" name="start_date" id="start_date" required>
-            
-            <label for="end_date">End Date:</label>
-            <input type="date" name="end_date" id="end_date" required>
-            
-            <label for="work_time">Work-Time (in 24 hours format):</label>
-            <input type="time" name="work_time_1" id="work_time_1" required> to <input type="time" name="work_time_2" id="work_time_2" required>
-            
-            <label for="days">Select Working Days:</label>
-            <ul>
-                {% for day in days %}
-                <li>
-                    <input type="checkbox" name="selected_days" value="{{ day }}">
-                    {{ day }}
-                </li>
-                {% endfor %}
-            </ul>
-            
-            <input type="submit" value="Submit">
-        </form>
+<body>
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo" />
+    <div>
+        <img class="demo-bg" src="../static/images/cool-background.png" alt="" />
+
+        <div class="demo-content">
+            <h1 style="color: rgb(0, 0, 0); font-family:Georgia, 'Times New Roman', Times, serif;">Internship Request
+                Form</h1>
+            <div class="form-container">
+                <form action="{{ url_for('student.add_new_internship') }}" id="date-form" method="post">
+                    <label for="academic_year">Academic Year: </label>
+                    <input type="text" name="academic_year" id="academic_year" required placeholder="YYYY-YYYY" />
+                    <label for="class">Class: </label>
+                    <select id="class" name="class">
+                        <option value="FE">FE</option>
+                        <option value="SE">SE</option>
+                        <option value="TE">TE</option>
+                        <option value="BE">BE</option>
+                    </select>
+
+                    <label for="organization_name">Name Of Organization: </label>
+                    <select name="organization_list" id="organization_list">
+                    <option value="" selected disabled>_</option>
+                    {% for org in organizations %}
+                    <option value="{{ org }}">{{ org }}</option>
+                    {% endfor %}
+                </select>
+                    <input type="text" name="organization_name" id="organization_name">
+
+                    <label for="">Select Internship Type:</label>
+                    <select name="internship_type" id="internship_type">
+                        <option value="in-house">In-house</option>
+                        <option value="Out-house">Out-house</option>
+                    </select>
+
+                    <label for="duration">Duration:</label>
+                    <input type="number" name="duration" id="duration" required placeholder="in weeks">
+
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" id="start_date" required>
+
+                    <label for="end_date">End Date:</label>
+                    <input type="date" name="end_date" id="end_date" required>
+
+                    <label for="work_time">Work-Time (in 24 hours format):</label>
+                    <div style="display: flex; flex-direction:row ; gap: 30px; width: auto;">
+                        <input type="time" name="work_time_1" id="work_time_1" required>
+                        to
+                        <input type="time" name="work_time_2" id="work_time_2" required>
+                    </div>
+
+                    <label for="days">Select Working Days:</label>
+                    <ul style="color: rgb(0, 0, 0);list-style-type: none; padding: 0; font-size: 25px;">
+                        {% for day in days %}
+                        <li>
+                            <input type="checkbox" name="selected_days" value="{{ day }}">
+                            {{ day }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
     </div>
 
-       
-   
+
 </body>
+
 </html>

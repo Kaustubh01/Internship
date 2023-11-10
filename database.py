@@ -9,6 +9,7 @@ class Student(db.Model):
     password = db.Column(db.String(255))
     username = db.Column(db.String(30))
     department = db.Column(db.String(30))
+    email = db.Column(db.String(90))
 
 
 class Internship(db.Model):
@@ -69,6 +70,12 @@ def set_student_department(prn, department):
     student = Student.query.get(prn)
     if student:
         student.department = department
+        db.session.commit()
+
+def set_student_email(prn, email):
+    student = Student.query.get(prn)
+    if student:
+        student.email = email
         db.session.commit()
 
 def update_password(password, prn): 
@@ -162,6 +169,11 @@ def get_feedback(id):
 
 def get_report(id):
     return Report.query.get(id)
+
+def get_student_using_internship_id(id):
+    internship = Internship.query.get(id)
+    prn = internship.prn
+    return Student.query.get(prn)
 
 # def set_internship_type(id, int_type):
 #     internship = Internship.query.get(id)

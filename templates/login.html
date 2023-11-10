@@ -7,22 +7,42 @@
     <title>Login</title>
   
   </head>
-  <body>
+  <body style="margin: 0%;">
+    <img class="demo-bg" src="" alt="" />
+    
+    <div class="demo-content">
+
+    
     <div class="content">
-      <form action="{{ url_for('login') }}" method="post">
-        <h1>Login</h1>
+      
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+        <form action="{{ url_for('index') }}" method="post" class="threebuttons">
+          <button type="submit" name="redirect_button" value="login" class="indexbuttons" style="font-size: 19px">
+            Already Have an account
+          </button>
+          <button type="submit" name="redirect_button" value="register" class="indexbuttons">
+            Create New Account
+          </button>
+          <button type="submit" name="redirect_button" value="login_incharge" class="indexbuttons">
+            Login as Incharge
+          </button>
+        </form>
+      <form action="{{ url_for('login') }}" method="post" class="loginform">
+         
+        <h1 style="color: rgb(0, 0, 0); font-family:Georgia, 'Times New Roman', Times, serif;">Login</h1>
         <div class="fillups" id="fillup1">
-          <label for="">Username: </label>
-          <input type="text" name="username" class="inputs" />
+          
+          <input type="text" name="username" class="inputs" placeholder="Username"/>
         </div>
         <br />
         <div class="fillups">
-          <label for="">Password</label>
-          <input type="password" name="password" class="inputs" />
+          
+          <input type="password" name="password" class="inputs" placeholder="Password"/>
         </div>
         <br />
         <input type="submit" value="Login" class="button" />
       </form>
+    </div>
     </div>
   </body>
 </html>

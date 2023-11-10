@@ -1,0 +1,46 @@
+ul li{
+    list-style: none;
+    padding: 20px 10px;
+    background-color: yellow;
+}
+ul li a{
+    text-decoration: none;
+    color: black;
+}
+.menu{
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.menu .sub-menu-1{
+    display: none;
+}
+.sub-menu-1:hover{
+    display: block;
+    position: absolute;
+}
+.reports-nav:hover .sub-menu-1{
+    display: block;
+}
+.sub-menu-2{
+    display: none;
+}
+.sub-menu-3{
+    display: none;
+}
+.internship-types-nav :hover .sub-menu-2{
+    display: flex;
+}
+.summary-nav:hover .sub-menu-3{
+    display: flex;
+}
+
+table{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td{
+    border: 1px solid black;
+}

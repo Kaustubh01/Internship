@@ -56,13 +56,19 @@ textarea {
 }
 
 input[type="submit"] {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
+    width: 100px;
+        padding: 12px;
+    
+        border: 0px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: medium;
+        background-color: rgb(17, 114, 210);
+        color: aliceblue;
+        border: 0px;
+        cursor: pointer;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 fieldset {

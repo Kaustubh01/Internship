@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div class="internship-view">
         <table>
@@ -17,7 +19,7 @@
                 <td>{{ internship.status }}</td>
             </tr>
             <tr>
-                
+
 
                 <th>Class</th>
                 <td>{{ internship.std_class }}</td>
@@ -84,8 +86,8 @@
                 </td>
             </tr>
         </table>
-        
-        
+
+
     </div>
 
     {% if not is_acknowledged %}
@@ -93,10 +95,22 @@
         <input type="submit" name="action" value="Approve">
     </form>
     <form method="POST" action="{{ url_for('incharge.reject') }}">
-        <input type="submit" name="action" value="Reject">
+        <textarea id="rejection_reason" name="rejection_reason" rows="4" cols="50" style="display: none;"></textarea>
+        <button type="button" id="rejection_btn" onclick="showRejectionReason()">Reject</button>
+        <input type="submit" name="action" value="Reject" id="submitButton" style="display: none;">
     </form>
     {% endif %}
 
 
 </body>
+
+<script>
+    function showRejectionReason() {
+        document.getElementById('rejection_reason').style.display = 'block'; 
+        document.getElementById('rejection_btn').style.display= 'none';
+        document.getElementById('submitButton').style.display = 'block';
+        document.getElementById('rejectButton').disabled = true;
+    }
+</script>
+
 </html>

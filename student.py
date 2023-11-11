@@ -43,6 +43,7 @@ def add_new_internship():
         organization_name = request.form.get('organization_list') if request.form.get('organization_name') == '' else request.form.get('organization_name')
         internship_type = request.form.get('internship_type')
         duration = request.form.get('duration')
+        mode = request.form.get('mode')
         start_date = request.form.get('start_date')
         end_date = request.form.get('end_date')
         work_time = f"{request.form.get('work_time_1')} - {request.form.get('work_time_2')}"
@@ -51,7 +52,7 @@ def add_new_internship():
         days_string = ', '.join([str(day) for day in selected_days])
 
 
-        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class, internship_type=internship_type)
+        add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class, internship_type=internship_type, mode =mode)
         
         return redirect(url_for('student.dashboard'))
     return render_template('request_internship.html',days = days, organizations = organizations)

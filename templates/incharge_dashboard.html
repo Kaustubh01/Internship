@@ -47,7 +47,11 @@
         </ul>
     </nav>
     <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
-    <h1>Incharge Dashboard</h1>
+    
+    <form action="{{ url_for('incharge.logout') }}" method="get">
+        <button type="submit" class="button">Logout</button>
+
+    </form>
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">

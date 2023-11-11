@@ -104,3 +104,8 @@ def view_certificate():
 def view_offer_letter():
     file = f"students/{session.get('internship_prn')}/offer_letter/{session.get('internship_id')}.pdf"
     return render_template('pdf.html',file = file , title = 'Offer Letter')
+
+@incharge_bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))

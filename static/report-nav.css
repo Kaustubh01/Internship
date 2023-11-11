@@ -1,0 +1,61 @@
+.demo-bg {
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-height: 100%;
+}
+
+.demo-content{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+}
+
+ul{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: rgb(0,0,0,.4);
+    width: 100vh;
+    margin-left: 50vh;
+    border-radius: 20px 20px;
+}
+
+ul li{
+    display: flex;
+    margin-left: 16px;
+    padding: 10px 20px;
+}
+
+ul li a{
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    font-size: 3vh;
+    color: rgb(255,255,255);
+}
+
+ul li a::after{
+    display: flex;
+    position: absolute;
+    content:' ';
+    margin: auto;
+    width: 0;
+    height: 2px;
+    background: rgb(255,255,255);
+    transition: width ease .3s;
+}
+
+ul li a:hover::after{
+    width: 100%;
+    left: 0%;
+}

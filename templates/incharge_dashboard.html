@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename = 'incharge_dashboard.css') }}">
 </head>
 <body>
-    <h1>Incharge Dashboard</h1>
+    
+    <div class="demo-content">
     <nav>
         <ul class="menu">
-            <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
+            <div class="dropdown">
             <li class="reports-nav">
                 <a href="{{ url_for('report.report_nav' )}}" >Reports</a>
                 <ul class="sub-menu-1">
@@ -20,32 +21,37 @@
                     <li>
                        <a href="">Last Three Years</a>
                     </li>
-                    <li >
-                         <a href="" class="internship-types-nav">Internship Types</a>
-                        <ul class="sub-menu-2">
-                            <li>In-House</li>
-                            <li>Out-House</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" class="summary-nav">Summary</a> 
-                        <ul class="sub-menu-3">
-                            <li>Yearly</li>
-                            <li>Student</li>
-                            <li>Company</li>
-                        </ul>
-
-                    </li>
-
+                    <div class="sub-dropdown">
+                        <li >
+                            <a href="" class="internship-types-nav">Internship Types</a>
+                           <ul class="sub-menu-2">
+                               <li>In-House</li>
+                               <li>Out-House</li>
+                           </ul>
+                       </li>
+                    </div>
+                    <div class="sub-dropdown-1">
+                        <li>
+                            <a href="#" class="summary-nav">Summary</a> 
+                            <ul class="sub-menu-3">
+                                <li>Yearly</li>
+                                <li>Student</li>
+                                <li>Company</li>
+                            </ul>
+                        </li>
+                    </div>
                 </ul>
             </li>
+            </div>
+            <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
         </ul>
     </nav>
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
+    <h1>Incharge Dashboard</h1>
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">
-        {% for item in data %}
-        {% if item.is_pending %}
+        
         <tr>
             <th>Student Name</th>
             <th>Class</th>
@@ -57,7 +63,8 @@
             <th>Status</th>
             <th></th>
         </tr>
-        
+        {% for item in data %}
+        {% if item.is_pending %}
         <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.internship.std_class }}</td>
@@ -140,6 +147,6 @@
             <td></td>
         </tr>
     </table>
-
+</div>
 </body>
 </html>

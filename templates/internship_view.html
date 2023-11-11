@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='internship_view.css') }}">
     <title>Document</title>
 </head>
 <body>
+    <img class="demo-bg" src="{{ url_for('static', filename='images/cool-background.png') }}" alt="" />
+    <div class="demo-content">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
     <div class="internship-view">
         <table>
             <tr>
@@ -90,13 +94,13 @@
 
     {% if not is_acknowledged %}
     <form method="POST" action="{{ url_for('incharge.approve') }}">
-        <input type="submit" name="action" value="Approve">
+        <input type="submit" class="iconic-button" name="action" value="Approve">
     </form>
     <form method="POST" action="{{ url_for('incharge.reject') }}">
-        <input type="submit" name="action" value="Reject">
+        <input type="submit" class="iconic-button" name="action" value="Reject">
     </form>
     {% endif %}
-
+    </div>
 
 </body>
 </html>

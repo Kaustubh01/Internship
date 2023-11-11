@@ -141,7 +141,7 @@
 <body>
     <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo" />
     <div>
-        <img class="demo-bg" src="../static/images/cool-background.png" alt="" />
+        <img class="demo-bg" src="" alt="" />
 
         <div class="demo-content">
             <h1 style="color: rgb(0, 0, 0); font-family:Georgia, 'Times New Roman', Times, serif;">Internship Request
@@ -159,12 +159,12 @@
                     </select>
 
                     <label for="organization_name">Name Of Organization: </label>
-                    <!-- <select name="organization_list" id="organization_list">
+                    <select name="organization_list" id="organization_list">
                     <option value="" selected disabled>_</option>
                     {% for org in organizations %}
                     <option value="{{ org }}">{{ org }}</option>
                     {% endfor %}
-                </select> -->
+                </select>
                     <input type="text" name="organization_name" id="organization_name">
 
                     <label for="">Select Internship Type:</label>

@@ -57,7 +57,7 @@ def approve():
 
         #SendEmail
         msg = Message('Internship Approval', sender=user, recipients=[get_student_using_internship_id(id=internship_id).email])
-        msg.body = f'Your internship request (ID: {internship_id}) has been approved.'
+        msg.body = f'Congratulations!!\n Your internship request for {get_internship(internship_id).organization} has been approved.'
         mail.send(msg)
     
     return redirect(url_for('incharge.incharge_dashboard'))
@@ -71,7 +71,7 @@ def reject():
         rejection_reason = request.form.get('choice')
 
         msg = Message('Internship Rejection', sender=user, recipients=[get_student_using_internship_id(id=internship_id).email])
-        msg.body = f'Your internship request (ID: {internship_id}) has been rejected. Reason: {rejection_reason}'
+        msg.body = f'Your internship request for {get_internship(internship_id).organization} has been rejected. Reason: {rejection_reason}'
         # Send the email
         mail.send(msg)
 

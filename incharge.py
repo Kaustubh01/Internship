@@ -39,8 +39,10 @@ def view_internship(internship_id):
     has_report = internship.report == 'submitted'
     has_feedback = internship.feedback == 'submitted'
 
+    reasons_to_reject = ['inadequate information provided', 'ethical concerns', 'proposed work hours overlap with the established college schedule']
 
-    return render_template('internship_view.html', internship = internship, student = student, is_acknowledged = is_acknowledged, has_offer_letter = has_offer_letter, has_certificate = has_certificate, has_report = has_report, has_feedback = has_feedback)
+
+    return render_template('internship_view.html', internship = internship, student = student, is_acknowledged = is_acknowledged, has_offer_letter = has_offer_letter, has_certificate = has_certificate, has_report = has_report, has_feedback = has_feedback, reasons_to_reject = reasons_to_reject)
 
 @incharge_bp.route('/approve', methods = ['POST'])
 def approve():
@@ -66,7 +68,7 @@ def reject():
     if request.method == 'POST' and request.form['action'] == 'Reject':
         internship_id = session.get('internship_id')
         set_internship_status(internship_id, 'Rejected')
-        rejection_reason = request.form.get('rejection_reason')
+        rejection_reason = request.form.get('choice')
 
         msg = Message('Internship Rejection', sender=user, recipients=[get_student_using_internship_id(id=internship_id).email])
         msg.body = f'Your internship request (ID: {internship_id}) has been rejected. Reason: {rejection_reason}'

@@ -101,7 +101,13 @@
         <input type="submit" class="iconic-button" name="action" value="Approve">
     </form>
     <form method="POST" action="{{ url_for('incharge.reject') }}">
-        <textarea id="rejection_reason" name="rejection_reason" rows="4" cols="50" style="display: none;"></textarea>
+        <div id="rejection_reason" name="rejection_reason" style="display: none;">
+            {% for reason in reasons_to_reject %}
+            <label>
+                <input type="radio" name="choice" value="{{ reason }}"> {{ reason }}
+            </label>
+            {% endfor %}
+        </div>
         <button type="button" id="rejection_btn" onclick="showRejectionReason()">Reject</button>
         <input type="submit" name="action" value="Reject" id="submitButton" style="display: none;">
     </form>

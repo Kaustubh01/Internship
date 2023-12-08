@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='year_end_summary.css') }}">
+    <title>Pie Chart Example</title>
+</head>
+<body>
+    <h1 class="title">2023-2024 Year End Report</h1>
+    <div class="company-class">
+        <div class="class_wise-horizontal-bars">
+            <div class="classbase">
+                horizontal graph
+            </div>
+            <div class="paid-unpaid">
+                vertical bars
+            </div>
+
+
+        </div>
+
+        <div class="company-pie" >
+            <!-- Display the pie chart image -->
+            <img src="data:image/png;base64,{{ chart_image }}" alt="Pie Chart">
+        </div>
+
+    </div>
+   
+    <div class="total-students">
+        <h3>243</h3>
+    </div>
+</body>
+</html>

@@ -1,4 +1,7 @@
-
+body{
+    display: flex;
+    flex-direction: column;
+}
 .title{
     margin: auto;
     text-align: center;
@@ -23,9 +26,10 @@
     flex-direction: column;
 }
 
-.class_wise-horizontal-bars .classbase, .paid-unpaid{
-    width: 100%;
-    height: 50%;
+.classbase, .paid-unpaid img{
+    width: 500px;
+    height: 300px;
+    margin: 20px;
 }
 
 .total-students{

@@ -1,102 +1,78 @@
 from flask import Blueprint, render_template, url_for, redirect, session,request, jsonify
+from collections import Counter, defaultdict
+from datetime import datetime
 from database import *
-import datetime
-import matplotlib.pyplot as plt
-from io import BytesIO
-import base64
-
 report_bp = Blueprint('report',__name__)
 
-
-def create_bar_yertical_graph():
-    categories = ['Category A', 'Category B', 'Category C']
-    values = [10, 20, 15]
-
-    # Create the bar graph using Matplotlib with bars along the y-axis
-    fig, ax = plt.subplots()
-    bars = ax.barh(categories, values)
-
-    # Remove the border around the graph by setting spines to 'none'
-    for spine in ['top', 'right', 'bottom', 'left']:
-        ax.spines[spine].set_visible(False)
-
-    # Customize other aspects of the plot if needed
-    ax.set_xlabel('Values')
-    ax.set_ylabel('Categories')
-    ax.set_title('Bar Graph with Bars on Y-Axis')
-
-    # Save the plot to a BytesIO object
-    img = BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    plt.close()
-
-    # Encode the image as base64
-    img_base64 = base64.b64encode(img.getvalue()).decode('utf-8')
-
-    return img_base64
-
-def create_bar_graph():
-    categories = ['Category A', 'Category B', 'Category C']
-    values = [10, 20, 15]
-
-    # Create the bar graph using Matplotlib with bars along the y-axis
-    fig, ax = plt.subplots()
-    bars = ax.bar(categories, values)
-
-    # Remove the border around the graph by setting spines to 'none'
-    for spine in ['top', 'right', 'bottom', 'left']:
-        ax.spines[spine].set_visible(False)
-
-    # Customize other aspects of the plot if needed
-    ax.set_xlabel('Values')
-    ax.set_ylabel('Categories')
-    ax.set_title('Bar Graph with Bars on Y-Axis')
-
-    # Save the plot to a BytesIO object
-    img = BytesIO()
-    plt.savefig(img, format='png')
-    img.seek(0)
-    plt.close()
-
-    # Encode the image as base64
-    img_base64 = base64.b64encode(img.getvalue()).decode('utf-8')
-
-    return img_base64
-
-
-def generate_pie_chart():
-    labels = ['Label 1', 'Label 2', 'Label 3']
-    values = [30, 50, 20]
-
-    fig, ax = plt.subplots()
-    ax.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
-    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
-
-
-
-    # Save the plot to a BytesIO object
-    image_stream = BytesIO()
-    plt.savefig(image_stream, format='png')
-    image_stream.seek(0)
-
-    # Encode the image as base64
-    image_base64 = base64.b64encode(image_stream.read()).decode('utf-8')
-
-    plt.close()  # Close the plot to free up resources
-
-    return image_base64
 
 @report_bp.route('/report-nav')
 def report_nav():
     return render_template('report-nav.html')
 
-@report_bp.route('/last-three-years')
-def last_three_years():
+
+def month_count_list_generator(dates, target_year=None):
+    month_counts = {}
+
+    for date_obj in dates:
+        if date_obj.year == target_year:
+            # Extract the month name
+            month_name = date_obj.strftime("%B")
+            
+            # Update the count in the dictionary
+            month_counts[month_name] = month_counts.get(month_name, 0) + 1
+
+    # Convert the dictionary into a list of tuples
+    return list(month_counts.items())
+
+def gender_count_list_generator(ids):
+    students_count = {"male":0, "female":0}
+    for id in ids:
+        if get_student_using_internship_id(id).gender =='male':
+            students_count['male']+=1
+        else:
+            students_count['female']+=1
+    return students_count
+
+def house_count_list_generator(ids):
+    house_count = {"inhouse":0,"outhouse":0}
+    for id in ids:
+        if get_internship(id).internship_type =='Out-house':
+            house_count['outhouse']+=1
+        else:
+            house_count['inhouse']+=1
+    return house_count
+
+def mode_count_list_generator(ids):
+    modes_counts = {'online':0, 'offline':0}
+    for id in ids:
+        if get_internship(id).mode =='online':
+            modes_counts['online']+=1
+        else:
+            modes_counts['offline']+=1
+    return modes_counts
+
+
+@report_bp.route('/year-end-summary')
+def year_end_summary_report():
+
     internships = get_all_internships()
-    vertical_bar_graph = create_bar_yertical_graph()
-    bar_graph = create_bar_graph()
-    chart_image = generate_pie_chart()
+    date_objects = [internship.start_date for internship in internships]
+    target_year = 2023
 
+    # Create a dictionary to store the count for each month
+    month_count_list = month_count_list_generator(date_objects, target_year)
 
-    return render_template('year_end_summary.html', chart_image=chart_image, bar_graph=bar_graph,vertical_bar_graph = vertical_bar_graph)
+    gender = gender_count_list_generator([internship.internship_id for internship in internships])
+    house = house_count_list_generator([internship.internship_id for internship in internships])
+    mode = mode_count_list_generator([internship.internship_id for internship in internships])
+    company = [ internship.organization for internship in internships]
+    bar = Counter(company)
+    
+    bar_label =list(bar.keys())
+    print(bar_label)
+    bar_values = list(bar.values())
+
+    labels = [row[0] for row in month_count_list]
+    values = [row[1] for row in month_count_list]
+
+    return render_template('year_end_summary.html',labels = labels, values = values, gender = gender, house = house,mode =mode, bar_label = bar_label, bar_values = bar_values)

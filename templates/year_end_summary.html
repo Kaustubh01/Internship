@@ -3,32 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year End Report</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='year_end_summary.css') }}">
-    <title>Pie Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1 class="title">2023-2024 Year End Report</h1>
-    <div class="company-class">
-        <div class="class_wise-horizontal-bars">
-            <div class="classbase">
-                <img src="data:image/png;base64,{{ bar_graph }}" alt="Bar Graph">
-            </div>
-            <div class="paid-unpaid">
-                <img src="data:image/png;base64,{{ vertical_bar_graph }}" alt="Bar Graph">
-            </div>
+    <h1>Year End Report</h1>
+    <div class="timeline">
+        <h3>Timeline:</h3>
+        <canvas id="monthly-graph" width="900" height="400"></canvas>
+    </div>
 
-
-        </div>
-
-        <div class="company-pie" >
-            <!-- Display the pie chart image -->
-            <img src="data:image/png;base64,{{ chart_image }}" alt="Pie Chart">
-        </div>
+    <div class="doughnuts">
+        <ul>
+            <li>
+                <div class="gender">
+                    <h3>Students</h3>
+                    <canvas id="gender" width="300" height="300"></canvas>
+                    
+                </div>
+            </li>
+            <li>
+                <div class="type">
+                    <h3>Type</h3>
+                    <canvas id="house" width="300" height="300"></canvas>
+                    
+                </div>
+            </li>
+            <li>
+                <div class="mode">
+                    <h3>Mode</h3>
+                    <canvas id="mode" width="300" height="300"></canvas>
+                    
+                </div>
+            </li>
+        </ul>
 
     </div>
-   
-    <div class="total-students">
-        <h3>243</h3>
+
+    <div class="bar">
+        <h3>Companies</h3>
+        <canvas id="bar" height="400" width="900"></canvas>
     </div>
+    
+
+
+    <script>
+        var yearCtx = document.getElementById('monthly-graph').getContext('2d');
+
+        var lineChart = new Chart(yearCtx, {
+            type:"line",
+            data: {
+                labels:{{ labels | safe }},
+                datasets: [
+                    {label: "Number Of Students",
+                    data:{{ values | safe }},
+                    fill: false,
+                    borderColor:"rgb(75,192,192)",
+                    lineTension: 0.1,}
+                ]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                                stepSize: 1 // Set the step size to 1 for integers
+                            }
+                }
+            }
+            }
+        })
+
+    </script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('gender').getContext('2d');
+            var data = {
+                labels: ['Male', 'Female'],
+                datasets: [{
+                    data: [{{ gender['male'] }}, {{ gender['female'] }}],
+                    backgroundColor: ['#36A2EB', '#FF6384'],
+                }],
+            };
+            var options = {
+                responsive: false,
+            };
+            var genderChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: options,
+            });
+        });
+    </script>
+    <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('house').getContext('2d');
+                var data = {
+                    labels: ['in house', 'out house'],
+                    datasets: [{
+                        data: [{{ house['inhouse'] }}, {{ house['outhouse'] }}],
+                        backgroundColor: ['#36A2EB', '#FF6384'],
+                    }],
+                };
+                var options = {
+                    responsive: false,
+                };
+                var genderChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: options,
+                });
+            });
+    </script>
+    <script>
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var ctx = document.getElementById('mode').getContext('2d');
+                        var data = {
+                            labels: ['online', 'offline'],
+                            datasets: [{
+                                data: [{{ mode['online'] }}, {{ mode['offline'] }}],
+                                backgroundColor: ['#36A2EB', '#FF6384'],
+                            }],
+                        };
+                        var options = {
+                            responsive: false,
+                        };
+                        var genderChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: data,
+                            options: options,
+                        });
+                    });
+    </script>
+
+<script>
+    // Get data from Flask
+    var labels = {{ bar_label | safe }};
+    var values = {{ bar_values }};
+
+    // Create a bar chart
+    var ctx = document.getElementById('bar').getContext('2d');
+    var barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'number of students interned',
+                data: values,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive:false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                                stepSize: 1 // Set the step size to 1 for integers
+                            }
+                }
+            }
+        }
+    });
+</script>
+
+
 </body>
 </html>

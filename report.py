@@ -51,6 +51,11 @@ def mode_count_list_generator(ids):
             modes_counts['offline']+=1
     return modes_counts
 
+def student_internship_count(prn):
+    count = 0
+    print(get_internships_using_prn())
+
+    return count
 
 @report_bp.route('/year-end-summary')
 def year_end_summary_report():
@@ -76,3 +81,58 @@ def year_end_summary_report():
     values = [row[1] for row in month_count_list]
 
     return render_template('year_end_summary.html',labels = labels, values = values, gender = gender, house = house,mode =mode, bar_label = bar_label, bar_values = bar_values)
+
+
+
+
+@report_bp.route('/accademic_year_report')
+def accademic_year_report():
+    return render_template('accademic_year_report.html')
+
+
+
+
+@report_bp.route('/students-report/',methods=['GET','POST'])
+def students_report():
+
+    if request.method == "POST":
+        search_string = request.form.get('search')
+        print(search_string)
+        return redirect(url_for('report.search_results', q="Harsh"))
+    
+    students_data = get_all_students()
+    students = []
+    for student in students_data:
+        if student.department != None:
+            students.append(student)
+    return render_template('students_report.html',students = students)
+
+@report_bp.route('/student-view/<int:prn>/')
+def student_view(prn):
+
+    student_data = get_student_using_prn(prn)
+    internships = get_internships_using_prn(prn)
+
+    student = {
+        "name":student_data.name,
+        "interned_for": set(i.organization for i in internships),
+        "internship_count": len(internships),
+        "internships": [i for i in internships],
+        "data":student_data
+    }
+    return render_template('student_summary.html', student = student)
+
+@report_bp.route('/search_results/<string:q>/')
+def search_results(q):
+    students = []
+    students_data = get_all_students()
+    for student in students_data:
+        if student.department is not None:
+            students.append(student)
+
+    result = []
+    for student in students:
+        if q.lower() in student.name.lower():
+            result.append(student)
+            print(result)
+    return render_template('search_results.html', result = result)

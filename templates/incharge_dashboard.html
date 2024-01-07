@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename = 'incharge_dashboard.css') }}">
 </head>
 <body>
@@ -16,7 +16,7 @@
                 <a href="{{ url_for('report.report_nav' )}}" >Reports</a>
                 <ul class="sub-menu-1">
                     <li>
-                        <a href="{{ url_for('report.year_end_summary_report') }}">Accademic Year</a>
+                        <a href="{{ url_for('report.accademic_year_report') }}">Accademic Year</a>
                     </li>
                     <li>
                        <a href="">Last Three Years</a>
@@ -34,8 +34,8 @@
                         <li>
                             <a href="#" class="summary-nav">Summary</a> 
                             <ul class="sub-menu-3">
-                                <li>Yearly</li>
-                                <li>Student</li>
+                                <li><a href="{{ url_for('report.year_end_summary_report') }}">Yearly</a></li>
+                                <li><a href="{{ url_for('report.students_report') }}">Student</a> </li>
                                 <li>Company</li>
                             </ul>
                         </li>

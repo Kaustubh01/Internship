@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student</title>
+</head>
+<body>
+    <h2>{{ student["name"] }}</h2>
+    <table>
+        <tr>
+            <th>Department</th>
+            <td>{{ student["data"].department }}</td>
+            <th>Email</th>
+            <td>{{ student["data"].email }}</td>
+        </tr>
+    </table>
+    <h3>Internships Details</h3>
+    <table>
+        <tr>
+            <th>Total Internships</th>
+            <td>{{ student["internship_count"] }}</td>
+        </tr>
+
+        <tr>
+            <th>Interned For:</th>
+            <td>
+                <ul>
+                {% for i in student["interned_for"] %}
+                    <li>{{ i }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Internships</h3>
+    <table>
+        <tr>
+            <th>Start Date</th>
+            <th>Organizations</th>
+        </tr>
+
+        {% for internship in student["internships"] %}
+        <tr>
+            <td> {{ internship.start_date }} </td>
+            <td> {{ internship.organization }} </td>
+            <td> <a href="{{ url_for('incharge.view_internship', internship_id = internship.internship_id) }}">View</a> </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

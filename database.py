@@ -188,6 +188,15 @@ def get_student_using_internship_id(id):
 def get_internship_dates():
     return db.session.query(Internship.start_date).all()
 
+def get_all_students():
+    return Student.query.all()
+
+def get_student_using_prn(prn):
+    return Student.query.get(prn)
+
+def get_internships_using_prn(prn):
+    return db.session.query(Internship).filter_by(prn = prn).all()
+
 def get_internship_company():
     # if year is not None:
     #     end_year_condition = Internship.end_date.year == year

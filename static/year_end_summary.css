@@ -1,0 +1,11 @@
+h1{
+    text-align: center;
+}
+
+.doughnuts ul{
+    list-style: none;
+    display: flex;
+}
+.doughnuts ul li div h3{
+    text-align: center;
+}

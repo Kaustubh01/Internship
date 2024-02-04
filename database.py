@@ -10,6 +10,7 @@ class Student(db.Model):
     username = db.Column(db.String(30))
     department = db.Column(db.String(30))
     email = db.Column(db.String(90))
+    gender = db.Column(db.String(10))
 
 
 class Internship(db.Model):
@@ -77,6 +78,12 @@ def set_student_email(prn, email):
     student = Student.query.get(prn)
     if student:
         student.email = email
+        db.session.commit()
+
+def set_student_gender(prn, gender):
+    student = Student.query.get(prn)
+    if student:
+        student.gender = gender
         db.session.commit()
 
 def update_password(password, prn): 
@@ -177,6 +184,24 @@ def get_student_using_internship_id(id):
     internship = Internship.query.get(id)
     prn = internship.prn
     return Student.query.get(prn)
+
+def get_internship_dates():
+    return db.session.query(Internship.start_date).all()
+
+def get_all_students():
+    return Student.query.all()
+
+def get_student_using_prn(prn):
+    return Student.query.get(prn)
+
+def get_internships_using_prn(prn):
+    return db.session.query(Internship).filter_by(prn = prn).all()
+
+def get_internship_company():
+    # if year is not None:
+    #     end_year_condition = Internship.end_date.year == year
+    #     return db.session.query(Internship.organization).filter(end_year_condition).all()
+    return list(db.session.query(Internship.organization).all())
 
 # def set_internship_type(id, int_type):
 #     internship = Internship.query.get(id)

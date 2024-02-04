@@ -9,6 +9,7 @@
 <body>
     
     <div class="demo-content">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
     <nav>
         <ul class="menu">
             <div class="dropdown">
@@ -44,14 +45,12 @@
             </li>
             </div>
             <li><a href="{{ url_for('incharge.incharge_dashboard') }}">Requests</a></li>
+            <form action="{{ url_for('incharge.logout') }}" method="get" class="logout">
+                <button type="submit" class="button">Logout</button>
+            </form>
         </ul>
     </nav>
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
     
-    <form action="{{ url_for('incharge.logout') }}" method="get">
-        <button type="submit" class="button">Logout</button>
-
-    </form>
     <h3>Pending Requests</h3>
 
     <table id="pending-internships-table">

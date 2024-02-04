@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
 </head>
 <body>
-    
     <h1>Upload the Offer Letter</h1>
     <form method="POST" enctype="multipart/form-data">
-        <label for="file">Offer Letter:</label>
+        <label for="file">Offer Letter(.pdf/.doc/.docx):</label>
         <input type="file" name="file" accept=".pdf, .doc, .docx">
         <input type="submit" value="Upload">
-
     </form>
 </body>
 </html>

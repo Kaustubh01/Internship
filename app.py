@@ -36,7 +36,7 @@ def index():
         return redirect(url_for('login'))
     elif selected_button == 'login_incharge':
         return redirect(url_for('incharge_login'))
-    return render_template('index.html')
+    return render_template('login.html')
    
 @app.route('/incharge_login', methods=['GET','POST'])
 def incharge_login():

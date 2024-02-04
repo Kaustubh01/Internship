@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session, jsonify
 from datetime import datetime
 import os
-from database import Student,init_app, add_internship,get_student,  get_internships_organizations, update_password, authenticate_student, check_registration, get_all_internships, get_student_name,set_internship_report,set_internship_feedback, set_internship_status,update_internship_feedback_status,update_internship_report_status,update_internship_offer_letter_status, update_internship_certificate_status, get_internship, get_feedback, get_report, set_student_username, get_student_using_username, set_student_department, set_student_gender,set_student_email
+from database import *
 from email_utils import mail
 from incharge import incharge_bp
 from student import student_bp

@@ -8,7 +8,7 @@ class Student(db.Model):
     name = db.Column(db.String(30))
     password = db.Column(db.String(255))
     username = db.Column(db.String(30))
-    department = db.Column(db.String(30))
+    department = db.Column(db.String(255))
     email = db.Column(db.String(90))
     gender = db.Column(db.String(10))
 

@@ -87,7 +87,85 @@ def year_end_summary_report():
 
 @report_bp.route('/accademic_year_report')
 def accademic_year_report():
-    return render_template('accademic_year_report.html')
+    internships = get_all_internships()
+    fe_count = 0;
+    se_count = 0;
+    te_count = 0;
+    be_count = 0;
+
+    for internship in internships:
+        if internship.std_class == "FE":
+            fe_count +=1
+
+        elif internship.std_class == "SE":
+            se_count += 1
+
+        elif internship.std_class == "TE":
+            te_count += 1
+
+        elif internship.std_class == "BE":
+            be_count += 1
+
+    departments_classes = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    for internship in internships:
+ 
+        if get_student(internship.prn).department == "Information Technology":
+            if internship.std_class == "FE":
+                departments_classes[0][0]+=1
+            elif internship.std_class == "SE":
+                departments_classes[0][1]+=1
+            elif internship.std_class == "TE":
+                departments_classes[0][2]+=1
+            elif internship.std_class == "BE":
+                departments_classes[0][3]+=1
+
+        if get_student(internship.prn).department == "Computer Engineering":
+            if internship.std_class == "FE":
+                departments_classes[1][0]+=1
+            elif internship.std_class == "SE":
+                departments_classes[1][1]+=1
+            elif internship.std_class == "TE":
+                departments_classes[1][2]+=1
+            elif internship.std_class == "BE":
+                departments_classes[1][3]+=1
+
+        if get_student(internship.prn).department == "Mechanical Engineering":
+            if internship.std_class == "FE":
+                departments_classes[2][0]+=1
+            elif internship.std_class == "SE":
+                departments_classes[2][1]+=1
+            elif internship.std_class == "TE":
+                departments_classes[2][2]+=1
+            elif internship.std_class == "BE":
+                departments_classes[2][3]+=1
+
+        if get_student(internship.prn).department == "Artificial Inteligience and Data Science":
+            if internship.std_class == "FE":
+                departments_classes[3][0]+=1
+            elif internship.std_class == "SE":
+                departments_classes[3][1]+=1
+            elif internship.std_class == "TE":
+                departments_classes[3][2]+=1
+            elif internship.std_class == "BE":
+                departments_classes[3][3]+=1
+
+        if get_student(internship.prn).department == "Electronics and Telecommunication":
+            if internship.std_class == "FE":
+                departments_classes[4][0]+=1
+            elif internship.std_class == "SE":
+                departments_classes[4][1]+=1
+            elif internship.std_class == "TE":
+                departments_classes[4][2]+=1
+            elif internship.std_class == "BE":
+                departments_classes[4][3]+=1
+        
+    print(departments_classes)
+            
+
+    labels = ['FE', "SE", "TE", "BE"]
+    values = [fe_count, se_count, te_count, be_count]
+
+    return render_template('accademic_year_report.html', labels = labels, values = values, departments_classes = departments_classes)
 
 
 
@@ -103,7 +181,7 @@ def students_report():
     students_data = get_all_students()
     students = []
     for student in students_data:
-        if student.department != None:
+        if student.username != None:
             students.append(student)
     return render_template('students_report.html',students = students)
 

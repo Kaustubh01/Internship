@@ -68,6 +68,7 @@ body{
     background-color: rgb(255, 255, 255);
         color: black;
         border: 3px solid black;
+        transition: all ease .6s;
 }
 
 label {
@@ -134,7 +135,7 @@ a {
     background-color: rgb(255, 255, 255);
     color: black;
     border: 3px solid black;
-
+    transition: all ease .6s;
 }
 
 @media screen and (max-width: 425px) {

@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, url_for, redirect, session, request
 from database import *
 from datetime import datetime
+from flask_mail import Message
+from email_utils import mail
+from config import *
 import os
 
 student_bp = Blueprint('student', __name__)
@@ -8,7 +11,7 @@ student_bp = Blueprint('student', __name__)
 @student_bp.route('/dashboard')
 def dashboard():
     data = []
-    internships = get_internships_organizations(session.get('prn'))
+    internships = get_internships_using_prn(session.get('prn'))
     for internship in internships:
         data.append({
             "status":internship.status =="Approved",
@@ -53,6 +56,11 @@ def add_new_internship():
 
 
         add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class, internship_type=internship_type, mode =mode)
+
+        msg = Message(sender= ADMIN_EMAIL,recipients=[ADMIN_EMAIL] )
+        msg.body = f"New Internship has been requested by {get_student(session.get('prn')).name} "
+
+        mail.send(msg)
         
         return redirect(url_for('student.dashboard'))
     return render_template('request_internship.html',days = days, organizations = organizations)

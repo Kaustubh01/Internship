@@ -4,6 +4,9 @@
 
     <form action="{{ url_for('incharge_login') }}" method="post" class="inchargeform">
       <h1 class="name" style="color: rgb(0, 0, 0); font-family:Georgia, 'Times New Roman', Times, serif;">Login as Incharge</h1>
+
+      <input type="text" name="username" id="username" placeholder="username" class="inputs">
+      <input type="password" name="password" id="password" placeholder="password" class="inputs">
       <input type="submit" value="Login" class="button" />
     </form>
   

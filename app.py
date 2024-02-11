@@ -6,16 +6,19 @@ from email_utils import mail
 from incharge import incharge_bp
 from student import student_bp
 from report import report_bp
+from config import *
 
 app = Flask(__name__)
+
+
 #socketio = SocketIO(app)
-app.secret_key = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:password@localhost/internship'
+app.secret_key = SECRET_KEY
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'skillhivedumy@gmail.com'
-app.config['MAIL_PASSWORD'] = 'fwgrugbsykerdtaw'
+app.config['MAIL_PORT'] = EMAIL_PORT
+app.config['MAIL_USERNAME'] = ADMIN_EMAIL
+app.config['MAIL_PASSWORD'] = ADMIN_EMAIL_PASSWORD
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
@@ -41,8 +44,12 @@ def index():
 @app.route('/incharge_login', methods=['GET','POST'])
 def incharge_login():
     if request.method == 'POST':
-        return redirect(url_for('incharge.incharge_dashboard'))
-
+        username = request.form['username']
+        password = request.form['password']
+        if authenticate_admin(username, password):
+            return redirect(url_for('incharge.incharge_dashboard'))
+        else:
+            return 'Invalid Credentials'
     return render_template('incharge_login.html')
 
 @app.route('/register', methods = ['GET', 'POST'])

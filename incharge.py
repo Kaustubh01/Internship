@@ -1,20 +1,22 @@
 from flask import Blueprint, render_template, url_for, redirect, session, request
 from flask_mail import Message
 from email_utils import mail
+from config import *
 from database import *
 
 incharge_bp = Blueprint('incharge', __name__)
 
-user = "skillhivedumy@gmail.com"
+user = ADMIN_EMAIL
 
 @incharge_bp.route('/incharge_dashboard', methods = ['GET', 'POST'])
 def incharge_dashboard():
     data = []
     internships = get_all_internships()
     for internship in internships:
+        student = get_student(internship.prn).name
         data.append(
             {
-                "name":get_student_name(internship.prn).split()[0].lower().capitalize() +' '+ get_student_name(internship.prn).split()[1].lower().capitalize() +' '+ get_student_name(internship.prn).split()[2].lower().capitalize(),
+                "name":student.split()[0].lower().capitalize() +' '+ student.split()[1].lower().capitalize() +' '+ student.split()[2].lower().capitalize(),
                 "internship":internship,
                 "is_pending": internship.status == "pending",
                 "is_approved": internship.status == "Approved",
@@ -50,12 +52,7 @@ def approve():
         internship_id = session.get('internship_id')
         set_internship_status(internship_id, 'Approved')
         email = request.form.get('email')
-        #notificationToStudent
-        #if socketio is not None:
-        #    socketio.emit('notification', {'message': f'Your internship request (ID: {internship_id}) has been approved.'}, room=f'student_{internship_id}')
-        print(get_student_using_internship_id(id=internship_id).email)
 
-        #SendEmail
         msg = Message('Internship Approval', sender=user, recipients=[get_student_using_internship_id(id=internship_id).email])
         msg.body = f'Congratulations!!\n Your internship request for {get_internship(internship_id).organization} has been approved.'
         mail.send(msg)

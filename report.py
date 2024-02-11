@@ -4,6 +4,18 @@ from datetime import datetime
 from database import *
 report_bp = Blueprint('report',__name__)
 
+@report_bp.route('/reports')
+def report_filters():
+    internships = get_all_internships()
+    students = get_all_students()
+    organizations = set(i.organization for i in internships)
+    internship_type = set(i.internship_type for i in internships)
+    accademic_year = set(i.year for i in internships)
+    departments = set(s.department for s in students)
+    print(departments)
+
+    return render_template('report_filter.html')
+
 
 @report_bp.route('/report-nav')
 def report_nav():
@@ -83,7 +95,12 @@ def year_end_summary_report():
     return render_template('year_end_summary.html',labels = labels, values = values, gender = gender, house = house,mode =mode, bar_label = bar_label, bar_values = bar_values)
 
 
+@report_bp.route('/company_report')
+def company_report():
+    companies_sumary = []
+    internships = get_all_internships()
 
+    return render_template('company_report.html')
 
 @report_bp.route('/accademic_year_report')
 def accademic_year_report():
@@ -188,7 +205,7 @@ def students_report():
 @report_bp.route('/student-view/<int:prn>/')
 def student_view(prn):
 
-    student_data = get_student_using_prn(prn)
+    student_data = get_student(prn)
     internships = get_internships_using_prn(prn)
 
     student = {

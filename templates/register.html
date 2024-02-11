@@ -1,33 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
-    <title>Register</title>
-</head>
-<body>
-    <img class="demo-bg" src="" alt="" />
-    <div class="demo-content">
-    <div class="content">
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="no img found" class="logo">
-<form action="{{ url_for('index') }}" method="post" class="threebuttons">
-    <button type="submit" name="redirect_button" value="login" class="indexbuttons" style="font-size: 19px">
-        Already Have an account
-    </button>
-    <button type="submit" name="redirect_button" value="register" class="indexbuttons">
-        Create New Account
-    </button>
-    <button type="submit" name="redirect_button" value="login_incharge" class="indexbuttons">
-        Login as Incharge
-    </button>
-</form>
+{% extends 'index.html' %}
+{% block title %} Register- {% endblock title %}
+{% block body %}
+
     <form action="{{ url_for('register') }}" method="post" class="registerform">
         <h1 style="color: rgb(0, 0, 0);font-family:Georgia, 'Times New Roman', Times, serif;">Sign Up</h1>
         <input type="number" placeholder="PRN number" name="prn_number" class="inputs">
         <input type="submit" value="Register" class="button">
     </form>
-    </div>
-    </div>
-</body>
-</html>
+    
+{% endblock body %}
+    

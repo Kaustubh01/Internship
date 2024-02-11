@@ -8,7 +8,7 @@ class Student(db.Model):
     name = db.Column(db.String(30))
     password = db.Column(db.String(255))
     username = db.Column(db.String(30))
-    department = db.Column(db.String(30))
+    department = db.Column(db.String(255))
     email = db.Column(db.String(90))
     gender = db.Column(db.String(10))
 
@@ -32,6 +32,11 @@ class Internship(db.Model):
     certificate = db.Column(db.String)
     internship_type = db.Column(db.String)
     mode = db.Column(db.String)
+
+class Admin(db.Model):
+    id = db.Column(db.Integer,primary_key = True)
+    username = db.Column(db.String(30))
+    password = db.Column(db.String(255))
 
 class Report(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -59,72 +64,20 @@ class Feedback(db.Model):
     question_8 = db.Column(db.Integer)
 
 
-def get_student(prn):
-    return Student.query.get(prn)
-
-def set_student_username(prn, username):
-    student = Student.query.get(prn)
-    if student:
-        student.username = username
-        db.session.commit()
-
-def set_student_department(prn, department):
-    student = Student.query.get(prn)
-    if student:
-        student.department = department
-        db.session.commit()
-
-def set_student_email(prn, email):
-    student = Student.query.get(prn)
-    if student:
-        student.email = email
-        db.session.commit()
-
-def set_student_gender(prn, gender):
-    student = Student.query.get(prn)
-    if student:
-        student.gender = gender
-        db.session.commit()
-
-def update_password(password, prn): 
-    student = Student.query.get(prn)
-    if student:
-        student.password = password
-        db.session.commit()
-        print('password updated')
-
-def authenticate_student(username, password):
-    student = Student.query.get(username)
-    if student.password == password:
-        print('student is registered')
-        return True
-    return False
 
 
 
-def check_registration(prn):
-    student = Student.query.get(prn)
-    if student.password is not None:
-        return True
+
+
     
 def add_internship(prn, organization, year, duration, start_date, end_date, work_time, days, std_class, internship_type, mode):
     internship = Internship(prn = prn, year = year , organization = organization, duration = duration, start_date = start_date, end_date = end_date, work_time=work_time, days = days, std_class = std_class, internship_type = internship_type,mode = mode)
     db.session.add(internship)
     db.session.commit()
 
-def get_internships_organizations(prn):
-    return Internship.query.filter_by(prn=prn).all()
-
 def get_all_internships():
     return Internship.query.all()
 
-def get_student_name(prn):
-    student = Student.query.get(prn)
-    return student.name
-
-def get_student_using_username(username):
-    student = db.session.query(Student).filter_by(username = username).first()
-    return student
 
 def set_internship_status(id, updated_status):
     internship = Internship.query.get(id)
@@ -171,8 +124,6 @@ def set_internship_feedback(id,question_1,question_2,question_3,question_4,quest
     db.session.add(feedback)
     db.session.commit()
 
-def get_internship(id):
-        return Internship.query.get(id)
 
 def get_feedback(id):
     return Feedback.query.get(id)
@@ -180,34 +131,83 @@ def get_feedback(id):
 def get_report(id):
     return Report.query.get(id)
 
+
+
+# def get_internship_dates():
+#     return db.session.query(Internship.start_date).all()
+
+def get_all_students():
+    return Student.query.all()
+
 def get_student_using_internship_id(id):
     internship = Internship.query.get(id)
     prn = internship.prn
     return Student.query.get(prn)
 
-def get_internship_dates():
-    return db.session.query(Internship.start_date).all()
+def get_student_using_username(username):
+    student = db.session.query(Student).filter_by(username = username).first()
+    return student
 
-def get_all_students():
-    return Student.query.all()
-
-def get_student_using_prn(prn):
+def get_student(prn):
     return Student.query.get(prn)
+
+def set_student_username(prn, username):
+    student = Student.query.get(prn)
+    if student:
+        student.username = username
+        db.session.commit()
+
+def set_student_department(prn, department):
+    student = Student.query.get(prn)
+    if student:
+        student.department = department
+        db.session.commit()
+
+def set_student_email(prn, email):
+    student = Student.query.get(prn)
+    if student:
+        student.email = email
+        db.session.commit()
+
+def set_student_gender(prn, gender):
+    student = Student.query.get(prn)
+    if student:
+        student.gender = gender
+        db.session.commit()
+
+def update_password(password, prn): 
+    student = Student.query.get(prn)
+    if student:
+        student.password = password
+        db.session.commit()
+        print('password updated')
+
+def check_registration(prn):
+    student = Student.query.get(prn)
+    if student.password is not None:
+        return True
+
+def authenticate_student(username, password):
+    student = Student.query.get(username)
+    if student.password == password:
+        print('student is registered')
+        return True
+    return False
+
+def get_internship(id):
+        return Internship.query.get(id)
 
 def get_internships_using_prn(prn):
     return db.session.query(Internship).filter_by(prn = prn).all()
 
-def get_internship_company():
-    # if year is not None:
-    #     end_year_condition = Internship.end_date.year == year
-    #     return db.session.query(Internship.organization).filter(end_year_condition).all()
-    return list(db.session.query(Internship.organization).all())
+def authenticate_admin(username, password):
+    admin = Admin.query.filter_by(username=username).first()
+    print(admin.username)
+    if admin.password == password:
+        return True
+    return False
 
-# def set_internship_type(id, int_type):
-#     internship = Internship.query.get(id)
-#     if internship:
-#         internship.Internship_type = int_type
-#         db.session.commit()  
+
 
 def init_app(app):
     db.init_app(app)

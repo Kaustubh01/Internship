@@ -8,5 +8,224 @@
 </head>
 <body>
     <h1>Accademic Year Report</h1>
+
+    <h3>Overall College:</h3>
+    <canvas id="all_departments_bar" height="400" width="900"></canvas>
+
+    <h3>Information Technology</h3>
+    <canvas id="it_bar" height="400" width="900"></canvas>
+
+    <h3>Computer Engineering</h3>
+    <canvas id="ce_bar" height="400" width="900"></canvas>
+
+    <h3>Mechanical Engineering</h3>
+    <canvas id="me_bar" height="400" width="900"></canvas>
+
+    <h3>Artifical Inteligence and Data Science</h3>
+    <canvas id="aids_bar" height="400" width="900"></canvas>
+
+    <h3>Electronics and Telecommunication</h3>
+    <canvas id="ext_bar" height="400" width="900"></canvas>
+    
+    <script>
+         // Get data from Flask
+    var labels = {{ labels | safe }};
+    var values = {{ values }};
+
+    // Create a bar chart
+    var ctx = document.getElementById('all_departments_bar').getContext('2d');
+    var barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'number of students interned',
+                data: values,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive:false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                                stepSize: 1 // Set the step size to 1 for integers
+                            }
+                }
+            }
+        }
+    });
+    </script>
+
+<script>
+    // Get data from Flask
+var labels = {{ labels | safe }};
+var values = {{ departments_classes[0] }};
+
+// Create a bar chart
+var ctx = document.getElementById('it_bar').getContext('2d');
+var barChart = new Chart(ctx, {
+   type: 'bar',
+   data: {
+       labels: labels,
+       datasets: [{
+           label: 'number of students interned',
+           data: values,
+           backgroundColor: 'rgba(75, 192, 192, 0.2)',
+           borderColor: 'rgba(75, 192, 192, 1)',
+           borderWidth: 1
+       }]
+   },
+   options: {
+       responsive:false,
+       scales: {
+           y: {
+               beginAtZero: true,
+               ticks: {
+                           stepSize: 1 // Set the step size to 1 for integers
+                       }
+           }
+       }
+   }
+});
+</script>
+
+<script>
+    // Get data from Flask
+var labels = {{ labels | safe }};
+var values = {{ departments_classes[1] }};
+
+// Create a bar chart
+var ctx = document.getElementById('ce_bar').getContext('2d');
+var barChart = new Chart(ctx, {
+   type: 'bar',
+   data: {
+       labels: labels,
+       datasets: [{
+           label: 'number of students interned',
+           data: values,
+           backgroundColor: 'rgba(75, 192, 192, 0.2)',
+           borderColor: 'rgba(75, 192, 192, 1)',
+           borderWidth: 1
+       }]
+   },
+   options: {
+       responsive:false,
+       scales: {
+           y: {
+               beginAtZero: true,
+               ticks: {
+                           stepSize: 1 // Set the step size to 1 for integers
+                       }
+           }
+       }
+   }
+});
+</script>
+
+<script>
+    // Get data from Flask
+var labels = {{ labels | safe }};
+var values = {{ departments_classes[2] }};
+
+// Create a bar chart
+var ctx = document.getElementById('me_bar').getContext('2d');
+var barChart = new Chart(ctx, {
+   type: 'bar',
+   data: {
+       labels: labels,
+       datasets: [{
+           label: 'number of students interned',
+           data: values,
+           backgroundColor: 'rgba(75, 192, 192, 0.2)',
+           borderColor: 'rgba(75, 192, 192, 1)',
+           borderWidth: 1
+       }]
+   },
+   options: {
+       responsive:false,
+       scales: {
+           y: {
+               beginAtZero: true,
+               ticks: {
+                           stepSize: 1 // Set the step size to 1 for integers
+                       }
+           }
+       }
+   }
+});
+</script>
+
+<script>
+    // Get data from Flask
+var labels = {{ labels | safe }};
+var values = {{ departments_classes[3] }};
+
+// Create a bar chart
+var ctx = document.getElementById('aids_bar').getContext('2d');
+var barChart = new Chart(ctx, {
+   type: 'bar',
+   data: {
+       labels: labels,
+       datasets: [{
+           label: 'number of students interned',
+           data: values,
+           backgroundColor: 'rgba(75, 192, 192, 0.2)',
+           borderColor: 'rgba(75, 192, 192, 1)',
+           borderWidth: 1
+       }]
+   },
+   options: {
+       responsive:false,
+       scales: {
+           y: {
+               beginAtZero: true,
+               ticks: {
+                           stepSize: 1 // Set the step size to 1 for integers
+                       }
+           }
+       }
+   }
+});
+</script>
+
+<script>
+    // Get data from Flask
+var labels = {{ labels | safe }};
+var values = {{ departments_classes[4] }};
+
+// Create a bar chart
+var ctx = document.getElementById('ext_bar').getContext('2d');
+var barChart = new Chart(ctx, {
+   type: 'bar',
+   data: {
+       labels: labels,
+       datasets: [{
+           label: 'number of students interned',
+           data: values,
+           backgroundColor: 'rgba(75, 192, 192, 0.2)',
+           borderColor: 'rgba(75, 192, 192, 1)',
+           borderWidth: 1
+       }]
+   },
+   options: {
+       responsive:false,
+       scales: {
+           y: {
+               beginAtZero: true,
+               ticks: {
+                           stepSize: 1 // Set the step size to 1 for integers
+                       }
+           }
+       }
+   }
+});
+</script>
+
 </body>
+
+
 </html>

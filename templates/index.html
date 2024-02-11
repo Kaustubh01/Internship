@@ -7,14 +7,22 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='index.css') }}"
     />
-    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='incharge_login.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='login.css') }}"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+    <title> {% block title %} {% endblock title %} Internship</title>
   </head>
   <body>
     <img
       class="demo-bg"
       src=""
       alt=""
-      
     />
     <div class="demo-content">
       <img
@@ -50,5 +58,8 @@
         </button>
       </form>
     </div>
+      {% block body %}
+        
+      {% endblock body %}
   </body>
 </html>

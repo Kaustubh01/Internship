@@ -8,7 +8,7 @@
 <body>
     <h1>Reports</h1>
     <h3>Set Fliters</h3>
-    <form action="" method="POST">
+    <form action="{{ url_for('report.report_filters') }}" method="POST">
         <label for="start-year">From :</label>
         <input type="number" name="start-year" id="start-year">
         -
@@ -16,7 +16,7 @@
         <input type="number" name="end-year" id="end-year"><br>
 
         <label for="class">Student's class</label>
-        <select id="class" name="class">
+        <select id="class" name="std-class">
             <option value="FE">FE</option>
             <option value="SE">SE</option>
             <option value="TE">TE</option>
@@ -25,20 +25,35 @@
 
         <label for="department">Student's department</label>
         <select name="department" id="department">
-            
+            <option value="Information Technology">Information Technology</option>
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+            <option value="Artifical Intelligence & Data Science">Artifical Intelligence & Data Science</option>
         </select>
 
 
         <label for="company">Organization</label>
         <select name="company" id="company">
+            {% for organization in organizations %}
+                <option value="{{ organization }}">{{ organization }}</option>
+            {% endfor %}
+        </select>
 
+        <label for="accademic-year">Accademic Year</label>
+        <select name="accademic-year" id="accademic-year">
+            {% for accademic_year in accademic_years %}
+                <option value="{{ accademic_year }}">{{ accademic_year }}</option>
+            {% endfor %}
         </select>
 
         <label for="internship-type">Internship Type</label>
         <select name="internship-type" id="internship-type">
-
+            <option value="in-house">in house</option>
+            <option value="out-house">out house</option>
         </select>
 
+        <br>
         <input type="submit" value="Filter">
     </form>
 </body>

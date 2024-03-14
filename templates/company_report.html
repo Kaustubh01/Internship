@@ -7,5 +7,17 @@
 </head>
 <body>
     <h1>Company Summary Report</h1>
+    <h3>Select Company</h3>
+
+    <form action="{{ url_for('report.company_report') }}" method="POST">
+        <select name="company" id="company">
+            {% for company in companies %}
+
+            <option value="{{ company }}">{{ company }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+
 </body>
 </html>

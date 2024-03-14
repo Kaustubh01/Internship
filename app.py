@@ -14,7 +14,7 @@ app = Flask(__name__)
 #socketio = SocketIO(app)
 app.secret_key = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = EMAIL_PORT
 app.config['MAIL_USERNAME'] = ADMIN_EMAIL

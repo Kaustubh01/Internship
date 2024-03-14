@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import sessionmaker
+ 
 
 db = SQLAlchemy()
 
@@ -33,9 +33,9 @@ class Internship(db.Model):
     internship_type = db.Column(db.String)
     mode = db.Column(db.String)
 
-class Admin(db.Model):
+class Incharge(db.Model):
     id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(30))
+    name = db.Column(db.String(30))
     password = db.Column(db.String(255))
 
 class Report(db.Model):
@@ -62,12 +62,6 @@ class Feedback(db.Model):
     question_6 = db.Column(db.Integer)
     question_7 = db.Column(db.Integer)
     question_8 = db.Column(db.Integer)
-
-
-
-
-
-
 
     
 def add_internship(prn, organization, year, duration, start_date, end_date, work_time, days, std_class, internship_type, mode):
@@ -201,13 +195,17 @@ def get_internships_using_prn(prn):
     return db.session.query(Internship).filter_by(prn = prn).all()
 
 def authenticate_admin(username, password):
-    admin = Admin.query.filter_by(username=username).first()
-    print(admin.username)
+    admin = Incharge.query.filter_by(name=username).first()
     if admin.password == password:
         return True
     return False
 
 
+def get_inhouse_outhouse(internship_type):
+    return db.session.query(Internship).filter_by(internship_type = internship_type).all()
+
+def get_company(company):
+    return db.session.query(Internship).filter_by(organization = company).all()
 
 def init_app(app):
     db.init_app(app)

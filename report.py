@@ -4,17 +4,24 @@ from datetime import datetime
 from database import *
 report_bp = Blueprint('report',__name__)
 
-@report_bp.route('/reports')
+@report_bp.route('/reports', methods=['POST','GET'])
 def report_filters():
     internships = get_all_internships()
     students = get_all_students()
     organizations = set(i.organization for i in internships)
-    internship_type = set(i.internship_type for i in internships)
-    accademic_year = set(i.year for i in internships)
-    departments = set(s.department for s in students)
-    print(departments)
+    accademic_years = set(i.year for i in internships)
 
-    return render_template('report_filter.html')
+    start_year_filter = request.form.get('start-year')
+    end_year_filter = request.form.get('end-year')
+    std_class_filter = request.form.get('std-class')
+    department_filter = request.form.get('department')
+    organization_filter = request.form.get('company')
+    accademic_year_filter = request.form.get('accademic-year')
+    internship_type_filter = request.form.get('internship-type')
+
+
+
+    return render_template('report_filter.html', organizations = organizations,  accademic_years = accademic_years)
 
 
 @report_bp.route('/report-nav')
@@ -95,12 +102,24 @@ def year_end_summary_report():
     return render_template('year_end_summary.html',labels = labels, values = values, gender = gender, house = house,mode =mode, bar_label = bar_label, bar_values = bar_values)
 
 
-@report_bp.route('/company_report')
+@report_bp.route('/company_report',methods = ['GET','POST'])
 def company_report():
-    companies_sumary = []
-    internships = get_all_internships()
+    i = get_all_internships()
+    companies = [internship.organization for internship in i]
+    
+    if request.method == 'POST':
+        selected_company = request.form.get('company')
+        print(selected_company)
+        return redirect(url_for('report.company_display',company = selected_company))
+        
+    return render_template('company_report.html', companies=companies)
 
-    return render_template('company_report.html')
+@report_bp.route('/company_display')
+def company_display():
+    company = request.args.get('company', type=str)
+    internships= get_company(company=company)
+    return render_template('company_display.html',company=company, internships =internships )
+
 
 @report_bp.route('/accademic_year_report')
 def accademic_year_report():
@@ -183,6 +202,17 @@ def accademic_year_report():
     values = [fe_count, se_count, te_count, be_count]
 
     return render_template('accademic_year_report.html', labels = labels, values = values, departments_classes = departments_classes)
+
+@report_bp.route('/inhouse_report')
+def inhouse_report():
+    internships = get_inhouse_outhouse('in-house')
+    return render_template('house_report.html',internships = internships)
+
+@report_bp.route('/outhouse_report')
+def outhouse_report():
+    internships = get_inhouse_outhouse('out-house')
+    return render_template('house_report.html',internships = internships)
+
 
 
 

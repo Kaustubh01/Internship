@@ -6,7 +6,7 @@ from database import *
 
 incharge_bp = Blueprint('incharge', __name__)
 
-user = ADMIN_EMAIL
+user = 'skillhivedumy@gmail.com'
 
 @incharge_bp.route('/incharge_dashboard', methods = ['GET', 'POST'])
 def incharge_dashboard():

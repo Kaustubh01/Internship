@@ -57,7 +57,7 @@ def add_new_internship():
 
         add_internship(prn= session.get('prn'), organization= organization_name, year = academic_year, duration= duration, start_date= start_date, end_date=end_date, work_time= work_time, days=days_string, std_class=student_class, internship_type=internship_type, mode =mode)
 
-        msg = Message(sender= ADMIN_EMAIL,recipients=[ADMIN_EMAIL] )
+        msg = Message(sender= 'skillhivedumy@gmail.com',recipients=['skillhivedumy@gmail.com'] )
         msg.body = f"New Internship has been requested by {get_student(session.get('prn')).name} "
 
         mail.send(msg)

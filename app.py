@@ -6,19 +6,19 @@ from email_utils import mail
 from incharge import incharge_bp
 from student import student_bp
 from report import report_bp
-from config import *
+# from config import *
 
 app = Flask(__name__)
 
 
 #socketio = SocketIO(app)
-app.secret_key = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+app.secret_key = 'SECRET_KEY'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://default:CSKFzMAYT8o5@ep-raspy-mouse-a4kjdb28.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = EMAIL_PORT
-app.config['MAIL_USERNAME'] = ADMIN_EMAIL
-app.config['MAIL_PASSWORD'] = ADMIN_EMAIL_PASSWORD
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'skillhivedumy@gmail.com'
+app.config['MAIL_PASSWORD'] = 'fwgrugbsykerdtaw'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 

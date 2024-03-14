@@ -118,7 +118,19 @@ def company_report():
 def company_display():
     company = request.args.get('company', type=str)
     internships= get_company(company=company)
-    return render_template('company_display.html',company=company, internships =internships )
+    data = [
+        {
+            "student": get_student_using_internship_id(i.internship_id).name,
+            "class": i.std_class,
+            "type": i.internship_type,
+            "mode": i.mode,
+            "duration" :f"{i.duration} weeks",
+            "start date":i.start_date,
+            "end date":i.end_date,
+        } 
+        for i in internships
+    ]
+    return render_template('company_display.html',company=company, data =data )
 
 
 @report_bp.route('/accademic_year_report')

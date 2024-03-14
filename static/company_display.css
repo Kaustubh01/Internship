@@ -1,0 +1,11 @@
+table{
+    margin: auto;
+}
+
+td, th{
+    text-align: center;
+    padding: 5px 10px;
+}
+th{
+    color: rgb(2, 98, 207);
+}

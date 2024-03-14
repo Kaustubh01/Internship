@@ -80,8 +80,8 @@ def view_report():
     internship = get_internship(session.get('internship_id'))
     student = get_student(internship.prn)
     report = get_report(session.get('internship_id'))
-    signature_url = url_for('static', filename=f"student/{internship.prn}/signature/signature.png")
-    return render_template('report_view.html' , report = report, internship = internship, student = student)
+    signature_url = url_for('static', filename=f'students/{internship.prn}/signature/signature.png')
+    return render_template('report_view.html' , report = report, internship = internship, student = student, signature = signature_url)
 
 @incharge_bp.route('/view_feedback')
 def view_feedback():

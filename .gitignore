@@ -25,3 +25,4 @@ config.ini
 static/students/*/
 
 config.py
+.vercel

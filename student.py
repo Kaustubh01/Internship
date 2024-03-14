@@ -3,7 +3,6 @@ from database import *
 from datetime import datetime
 from flask_mail import Message
 from email_utils import mail
-from config import *
 import os
 
 student_bp = Blueprint('student', __name__)

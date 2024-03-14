@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect, session, request
 from flask_mail import Message
 from email_utils import mail
-from config import *
+# from config import *
 from database import *
 
 incharge_bp = Blueprint('incharge', __name__)

@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'company_display.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'report_table.css') }}">
     <title>Document</title>
 </head>
 <body>
-
-    <h3>Company : {{ company }}</h3>
+    <img class="logo" src="{{ url_for('static', filename = 'images/logo.png') }}" alt="">
+    {% if company_report %}
+    <h2>Company : {{ company }}</h2>
+    {% endif %}
+    {% if current_year %}
+    <h2>{{ current_year-3 }} - {{ current_year }} Summary</h2>
+    {% endif %}
 
     <table>
         <tr>
@@ -19,6 +24,9 @@
             <th>Duration</th>
             <th>Start Date</th>
             <th>End Date</th>
+            {% if current_year %}
+            <th>Company</th>
+            {% endif %}
         </tr>
         {% for d in data %}
 
@@ -30,6 +38,10 @@
             <td>{{ d["duration"] }}</td>
             <td>{{ d["start date"] }}</td>
             <td>{{ d["end date"] }}</td>
+            
+            {% if current_year %}
+            <td>{{ d["company"] }}</td>
+            {% endif %}
         
         </tr>
         {% endfor %}

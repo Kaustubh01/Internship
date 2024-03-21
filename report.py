@@ -118,6 +118,7 @@ def company_report():
 def company_display():
     company = request.args.get('company', type=str)
     internships= get_company(company=company)
+    company_report = True
     data = [
         {
             "student": get_student_using_internship_id(i.internship_id).name,
@@ -130,7 +131,7 @@ def company_display():
         } 
         for i in internships
     ]
-    return render_template('company_display.html',company=company, data =data )
+    return render_template('report_table.html',company=company, data =data, company_report = company_report )
 
 
 @report_bp.route('/accademic_year_report')
@@ -273,3 +274,27 @@ def search_results(q):
             result.append(student)
             print(result)
     return render_template('search_results.html', result = result)
+
+@report_bp.route('/last-three-years')
+def last_three_years_summary():
+    current_year = datetime.now().year
+    last_year = current_year - 3
+    internships = get_all_internships()
+
+    valid_internships_to_display = [internship for internship in internships if current_year - internship.start_date.year <= 3]
+    data = [
+        {
+            "student": get_student_using_internship_id(i.internship_id).name,
+            "class": i.std_class,
+            "type": i.internship_type,
+            "mode": i.mode,
+            "duration" :f"{i.duration} weeks",
+            "start date":i.start_date,
+            "end date":i.end_date,
+            "company":i.organization
+        } 
+        for i in valid_internships_to_display
+        ]
+    print(data)
+    
+    return render_template('report_table.html', data = data, current_year = current_year)
